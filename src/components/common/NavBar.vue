@@ -11,6 +11,7 @@
             v-for="(item, i) in navList"
             :key="i"
             :href="item.href"
+            v-bind:class="{ active: currentPath == item.href }"
           >
             {{ item.name }}
           </b-nav-item>
@@ -55,10 +56,10 @@ export default {
   data () {
     return {
       navList: [
-        { href: '/index', name: 'Home', active: true },
-        { href: '/law', name: 'Law', active: false },
-        { href: '/movie', name: 'Movie', active: false },
-        { href: '/event', name: 'Event', active: false }
+        { href: '/index', name: 'Home' },
+        { href: '/law', name: 'Law' },
+        { href: '/movie', name: 'Movie' },
+        { href: '/event', name: 'Event' }
       ]
     }
   },

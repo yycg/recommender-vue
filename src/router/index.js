@@ -5,6 +5,7 @@ import Home from '@/components/Home'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -23,6 +24,21 @@ export default new Router({
           path: '/index',
           name: 'AppIndex',
           component: () => import('../components/home/AppIndex')
+        },
+        {
+          path: '/law',
+          name: 'LawIndex',
+          component: () => import('../components/law/LawIndex')
+        },
+        {
+          path: '/movie',
+          name: 'MovieIndex',
+          component: () => import('../components/movie/MovieIndex')
+        },
+        {
+          path: '/event',
+          name: 'EventIndex',
+          component: () => import('../components/event/EventIndex')
         }
       ]
     }
