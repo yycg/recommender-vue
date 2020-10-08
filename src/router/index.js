@@ -31,6 +31,11 @@ export default new Router({
           component: () => import('../components/law/LawIndex')
         },
         {
+          path: '/medical',
+          name: 'MedicalIndex',
+          component: () => import('../components/medical/MedicalIndex')
+        },
+        {
           path: '/movie',
           name: 'MovieIndex',
           component: () => import('../components/movie/MovieIndex')
@@ -39,6 +44,11 @@ export default new Router({
           path: '/event',
           name: 'EventIndex',
           component: () => import('../components/event/EventIndex')
+        },
+        {
+          path: '/event/detail',
+          name: 'EventDetail',
+          component: () => import('../components/event/EventDetail')
         }
       ]
     }

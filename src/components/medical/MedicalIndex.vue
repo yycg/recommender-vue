@@ -5,7 +5,7 @@
       <side-menu></side-menu>
     </el-aside>
     <el-main>
-      movie
+      medical
     </el-main>
   </el-container>
 </template>
