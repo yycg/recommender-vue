@@ -47,7 +47,7 @@ export default new Router({
         },
         {
           path: '/event/detail',
-          name: 'EventDetail',
+          name: 'Detail',
           component: () => import('../components/event/EventDetail')
         }
       ]

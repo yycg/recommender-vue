@@ -5,15 +5,15 @@
     :default-open-keys="['sub1']"
     :style="{ height: '100%', borderRight: 0 }"
   >
-    <a-sub-menu key="sub1">
-      <span slot="title"><a-icon type="user" />探索</span>
-    </a-sub-menu>
-    <a-sub-menu key="sub2">
-      <span slot="title"><a-icon type="laptop" />搜索</span>
-    </a-sub-menu>
-    <a-sub-menu key="sub3">
-      <span slot="title"><a-icon type="notification" />推荐</span>
-    </a-sub-menu>
+    <a-menu-item key="1">
+      <a-icon type="user" />探索
+    </a-menu-item>
+    <a-menu-item key="2">
+      <a-icon type="laptop" />搜索
+    </a-menu-item>
+    <a-menu-item key="3">
+      <a-icon type="notification" />推荐
+    </a-menu-item>
   </a-menu>
 </template>
 

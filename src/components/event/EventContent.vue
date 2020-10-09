@@ -1,54 +1,79 @@
 <template>
-  <div>
-  <div id="wrapper" class="fwrap">
-    <div id="content">
-      <!-- <div class="grid-free clearfix"> -->
-      <div class="article">
-        <ul class="events-list events-list-2col events-list-pic75">
-          <li class="list-entry" v-for="(event, i) in events" :key="i">
-            <div class="pic">
-              <a tabindex="-1" href="#..." title="!确定不感兴趣了？">
-                <img
-                  alt=""
-                  :data-lazy="event.image"
-                  :src="event.image"
-                  width="75"
-                />
-              </a>
-            </div>
-            <div class="info">
-              <div class="title">
-                <a href="#..." title="!确定不感兴趣了？">
-                  {{ event.title }}
-                </a>
-              </div>
-              <div class="datetime">
-                {{ event.begin_time }} 至 {{ event.end_time }}
-              </div>
-              <address :title="event.address">{{ event.address }}</address>
-              <div>{{ event.wisher_count }} 人关注</div>
-            </div>
+  <ul class="events-list events-list-pic100 events-list-psmall">
+    <li
+      class="list-entry"
+      itemscope
+      itemtype="http://data-vocabulary.org/Event"
+    >
+      <div class="pic">
+        <a href="https://www.douban.com/event/33718338/">
+          <img
+            data-lazy="https://img1.doubanio.com/pview/event_poster/median/public/2f29b84beda8a6c.jpg"
+            src="https://img1.doubanio.com/pview/event_poster/median/public/2f29b84beda8a6c.jpg"
+            width="110"
+            itemprop="photo"
+          />
+        </a>
+      </div>
+      <div class="info">
+        <div class="title">
+          <a
+            href="https://www.douban.com/event/33718338/"
+            title="i旅行·走进五彩斑斓童话世界-探寻北京最美秋色-穿越原始森林"
+            itemprop="url"
+          >
+            <span itemprop="summary"
+              >i旅行·走进五彩斑斓童话世界-探寻北京最美秋色-穿越原始森林</span
+            >
+          </a>
+        </div>
+
+        <ul class="event-meta">
+          <li class="event-time">
+            <span class="hidden-xs">时间：</span>
+
+            09月26日 周六 07:30-19:00 ...
+            <time itemprop="startDate" datetime="2020-09-26T07:30:00"></time>
+            <time itemprop="endDate" datetime="2020-11-29T19:00:00"></time>
+          </li>
+          <li title="北京 朝阳区 惠新西街南口">
+            <span class="hidden-xs">地点：</span>
+            朝阳区 惠新西街南口
+            <meta
+              itemscope
+              itemprop="location"
+              content="北京 朝阳区 惠新西街南口"
+            />
+
+            <span
+              itemprop="geo"
+              itemscope
+              itemtype="http://data-vocabulary.org/​Geo"
+            >
+              <meta itemprop="latitude" content="39.977684" />
+              <meta itemprop="longitude" content="116.417862" />
+            </span>
+          </li>
+          <li class="fee">
+            <span class="hidden-xs">费用：</span>
+            <strong>免费</strong>
+          </li>
+          <li>
+            <span class="meta-title">发起：</span>
+            <a
+              target="db-event-owner"
+              href="https://www.douban.com/location/people/146256181/"
+              >艾米</a
+            >
           </li>
         </ul>
+        <p class="counts">
+          <span>24人参加</span> <span class="pipe"></span>
+          <span>16人感兴趣</span>
+        </p>
       </div>
-    </div>
-    <!-- </div> -->
-  </div>
-
-  <a-card hoverable style="width: 240px">
-    <img
-      slot="cover"
-      alt="example"
-      src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
-    />
-    <a-card-meta title="Europe Street beat">
-      <template slot="description">
-        www.instagram.com
-      </template>
-    </a-card-meta>
-  </a-card>
-
-  </div>
+    </li>
+  </ul>
 </template>
 
 <script>
@@ -74,5 +99,7 @@ export default {
 </script>
 
 <style scoped>
+@import "https://img3.doubanio.com/f/shire/859dba5cddc7ed1435808cf5a8ddde5792cd6e0c/css/douban.css";
 @import "https://img3.doubanio.com/f/loc/6516dfea7e8ece9e37c50fe8e12113ef4e500820/css/loc/base.css";
+@import "https://img3.doubanio.com/f/loc/b44c6774804b07beb8d416b8b8143d4f75b58907/css/loc/event/subject_home.css";
 </style>

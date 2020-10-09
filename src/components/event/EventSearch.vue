@@ -7,22 +7,11 @@
       <a-layout style="padding: 0 24px 24px">
         <a-breadcrumb style="margin: 16px 0">
           <a-breadcrumb-item>活动</a-breadcrumb-item>
-          <a-breadcrumb-item>探索</a-breadcrumb-item>
+          <a-breadcrumb-item>搜索</a-breadcrumb-item>
         </a-breadcrumb>
 
-        <a-card title="热门活动" :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
+        <a-card title="活动搜索" :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
           <event-carousel></event-carousel>
-          <br>
-        </a-card>
-
-        <br>
-
-        <a-card title="分类活动" :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
-          <event-select></event-select>
-          <br>
-          <event-content></event-content>
-          <br>
-          <pagination></pagination>
         </a-card>
 
       </a-layout>
@@ -32,15 +21,11 @@
 
 <script>
 import SideMenu from '@/components/common/SideMenu'
-import EventCarousel from './EventCarousel'
-import EventSelect from './EventSelect'
 import EventContent from './EventContent'
 import Pagination from '@/components/common/Pagination'
 export default {
   components: {
     SideMenu,
-    EventCarousel,
-    EventSelect,
     EventContent,
     Pagination
   },
