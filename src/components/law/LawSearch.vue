@@ -7,12 +7,13 @@
       <a-layout style="padding: 0 24px 24px">
         <a-breadcrumb style="margin: 16px 0">
           <a-breadcrumb-item>法规</a-breadcrumb-item>
-          <a-breadcrumb-item>探索</a-breadcrumb-item>
+          <a-breadcrumb-item>搜索</a-breadcrumb-item>
         </a-breadcrumb>
 
-        <a-card title="法规展示" :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
-          <tree></tree>
+        <a-card title="法规搜索" :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
+          <law-input></law-input>
           <br>
+          <law-table></law-table>
         </a-card>
 
         <br>
@@ -24,11 +25,13 @@
 
 <script>
 import SideMenu from '@/components/common/SideMenu'
-import Tree from '@/components/common/Tree'
+import LawInput from './LawInput'
+import LawTable from '@/components/common/Table'
 export default {
   components: {
     SideMenu,
-    Tree
+    LawInput,
+    LawTable
   },
   data () {
     return {

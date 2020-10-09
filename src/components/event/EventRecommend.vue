@@ -6,16 +6,18 @@
       </a-layout-sider>
       <a-layout style="padding: 0 24px 24px">
         <a-breadcrumb style="margin: 16px 0">
-          <a-breadcrumb-item>法规</a-breadcrumb-item>
-          <a-breadcrumb-item>探索</a-breadcrumb-item>
+          <a-breadcrumb-item>活动</a-breadcrumb-item>
+          <a-breadcrumb-item>推荐</a-breadcrumb-item>
         </a-breadcrumb>
 
-        <a-card title="法规展示" :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
-          <tree></tree>
+        <a-card title="活动推荐" :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
+          <recommend-select></recommend-select>
           <br>
+          <br>
+          <event-content></event-content>
+          <br>
+          <pagination></pagination>
         </a-card>
-
-        <br>
 
       </a-layout>
     </a-layout>
@@ -24,11 +26,15 @@
 
 <script>
 import SideMenu from '@/components/common/SideMenu'
-import Tree from '@/components/common/Tree'
+import RecommendSelect from '@/components/common/RecommendSelect'
+import EventContent from './EventContent'
+import Pagination from '@/components/common/Pagination'
 export default {
   components: {
     SideMenu,
-    Tree
+    RecommendSelect,
+    EventContent,
+    Pagination
   },
   data () {
     return {

@@ -7,11 +7,14 @@
       <a-layout style="padding: 0 24px 24px">
         <a-breadcrumb style="margin: 16px 0">
           <a-breadcrumb-item>法规</a-breadcrumb-item>
-          <a-breadcrumb-item>探索</a-breadcrumb-item>
+          <a-breadcrumb-item>推荐</a-breadcrumb-item>
         </a-breadcrumb>
 
-        <a-card title="法规展示" :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
-          <tree></tree>
+        <a-card title="法规推荐" :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
+          <recommend-select></recommend-select>
+          <br>
+          <br>
+          <checkable-tree></checkable-tree>
           <br>
         </a-card>
 
@@ -24,11 +27,13 @@
 
 <script>
 import SideMenu from '@/components/common/SideMenu'
-import Tree from '@/components/common/Tree'
+import RecommendSelect from '@/components/common/RecommendSelect'
+import CheckableTree from '@/components/common/CheckableTree'
 export default {
   components: {
     SideMenu,
-    Tree
+    RecommendSelect,
+    CheckableTree
   },
   data () {
     return {

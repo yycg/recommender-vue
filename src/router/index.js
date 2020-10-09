@@ -31,6 +31,16 @@ export default new Router({
           component: () => import('../components/law/LawIndex')
         },
         {
+          path: '/law/search',
+          name: 'LawSearch',
+          component: () => import('../components/law/LawSearch')
+        },
+        {
+          path: '/law/recommend',
+          name: 'LawRecommend',
+          component: () => import('../components/law/LawRecommend')
+        },
+        {
           path: '/medical',
           name: 'MedicalIndex',
           component: () => import('../components/medical/MedicalIndex')
@@ -47,8 +57,18 @@ export default new Router({
         },
         {
           path: '/event/detail',
-          name: 'Detail',
+          name: 'EventDetail',
           component: () => import('../components/event/EventDetail')
+        },
+        {
+          path: '/event/search',
+          name: 'EventSearch',
+          component: () => import('../components/event/EventSearch')
+        },
+        {
+          path: '/event/recommend',
+          name: 'EventRecommend',
+          component: () => import('../components/event/EventRecommend')
         }
       ]
     }

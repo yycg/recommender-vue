@@ -11,7 +11,12 @@
         </a-breadcrumb>
 
         <a-card title="活动搜索" :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
-          <event-carousel></event-carousel>
+          <event-input></event-input>
+          <br>
+          <br>
+          <event-content></event-content>
+          <br>
+          <pagination></pagination>
         </a-card>
 
       </a-layout>
@@ -21,11 +26,13 @@
 
 <script>
 import SideMenu from '@/components/common/SideMenu'
+import EventInput from './EventInput'
 import EventContent from './EventContent'
 import Pagination from '@/components/common/Pagination'
 export default {
   components: {
     SideMenu,
+    EventInput,
     EventContent,
     Pagination
   },

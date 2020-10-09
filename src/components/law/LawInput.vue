@@ -1,5 +1,5 @@
 <template>
-  <a-input-search style="margin-bottom: 8px" placeholder="请输入活动关键词" @change="onChange" />
+  <a-input-search style="margin-bottom: 8px" placeholder="请输入法规关键词" @change="onChange" />
 </template>
 
 <script>
