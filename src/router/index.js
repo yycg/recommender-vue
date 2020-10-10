@@ -51,6 +51,16 @@ export default new Router({
           component: () => import('../components/movie/MovieIndex')
         },
         {
+          path: '/movie/search',
+          name: 'MovieSearch',
+          component: () => import('../components/movie/MovieSearch')
+        },
+        {
+          path: '/movie/recommend',
+          name: 'MovieRecommend',
+          component: () => import('../components/movie/MovieRecommend')
+        },
+        {
           path: '/event',
           name: 'EventIndex',
           component: () => import('../components/event/EventIndex')

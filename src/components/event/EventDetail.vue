@@ -122,55 +122,6 @@
                 <span>要参加</span>
               </a>
             </div>
-
-            <div class="event-spread">
-              <div class="rec-sec">
-                <span class="rec">
-                  <a
-                    data-user_id="0"
-                    href="https://www.douban.com/accounts/register?reason=collect"
-                    share-id="33732055"
-                    data-mode="plain"
-                    data-name="10月16日·[久违]赵烁音乐专场 蜗牛小酒馆（安贞店）"
-                    data-type=""
-                    data-desc="开始时间：2020-10-16 20:00 / 地点：北京 朝阳区 朝阳区安华西里三区甲3号2层一号 / 参加人数：2"
-                    data-href="https://www.douban.com/event/33732055/"
-                    data-image="https://img3.doubanio.com/pview/event_poster/small/public/9e68c63e1f883be.jpg"
-                    data-properties="{}"
-                    data-redir="https://www.douban.com/static/dshare_proxy.html"
-                    data-text=""
-                    data-apikey=""
-                    data-curl=""
-                    data-count="10"
-                    data-object_kind="1011"
-                    data-object_id="33732055"
-                    data-target_type="rec"
-                    data-target_action="0"
-                    data-action_props="{&#34;event_title&#34;:&#34;10月16日·[久违]赵烁音乐专场 蜗牛小酒馆（安贞店）&#34;,&#34;event_url&#34;:&#34;http:\/\/www.douban.com\/event\/33732055\/&#34;}"
-                    data-btn_text="推荐"
-                    data-heading="推荐到豆瓣"
-                    data-sanity_key="_2d678"
-                    class="j a_show_login lnk-sharing lnk-douban-sharing"
-                    >推荐</a
-                  >
-                </span>
-              </div>
-              <ul class="inline-list">
-                <li class="rec" id="None-33732055">
-                  <a
-                    href="#"
-                    data-type="None"
-                    data-url="https://www.douban.com/location/partner/event/33732055/"
-                    data-desc=""
-                    data-title="#豆瓣同城北京活动#：10月16日·[久违]赵烁音乐专场 蜗牛小酒馆（安贞店） --时间：10月16日 至 10月16日 (朝阳区朝阳区安华西里三区甲3号2层一号)"
-                    data-pic="https://img3.doubanio.com/pview/event_poster/large/public/9e68c63e1f883be.jpg"
-                    class="bn-sharing"
-                    >分享到</a
-                  >
-                  &nbsp;&nbsp;
-                </li>
-              </ul>
-            </div>
           </div>
         </div>
 
