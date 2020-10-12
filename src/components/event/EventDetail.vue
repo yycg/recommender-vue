@@ -153,6 +153,8 @@
         </div>
       </div>
     </a-card>
+    <input type="button" @click="getdata()" value=" 小熊点点它">
+
   </a-layout>
 </template>
 
@@ -182,6 +184,16 @@ export default {
       },
     };
   },
+  methods: {
+    getdata() {
+      // get请求
+      this.$axios.get("/event/27913063").then(res => {
+        alert("请求成功，response=" + res.data);
+        // data = res.data;
+        console.log(res.data);
+      });
+    }
+  }
 };
 </script>
 
