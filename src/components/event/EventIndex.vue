@@ -54,7 +54,12 @@ export default {
         { href: '/event/recommend', name: '推荐', type: 'notification' }
       ],
       selectedKeys: [0],
-      selected: false
+      selected: false,
+      count: 0,
+      eventDTOs: {},
+      start: 0,
+      total: 0,
+      categoryList: []
     }
   },
   methods: {
