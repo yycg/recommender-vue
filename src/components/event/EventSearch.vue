@@ -14,7 +14,7 @@
           <event-input></event-input>
           <br>
           <br>
-          <event-content></event-content>
+          <event-list></event-list>
           <br>
           <pagination></pagination>
         </a-card>
@@ -27,13 +27,13 @@
 <script>
 import SideMenu from '@/components/common/SideMenu'
 import EventInput from './EventInput'
-import EventContent from './EventContent'
+import EventList from './EventList'
 import Pagination from '@/components/common/Pagination'
 export default {
   components: {
     SideMenu,
     EventInput,
-    EventContent,
+    EventList,
     Pagination
   },
   data () {

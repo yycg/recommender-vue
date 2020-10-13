@@ -5,9 +5,9 @@
 <script>
 export default {
   methods: {
-    onSearch(value) {
-      console.log(value);
-    },
-  },
-};
+    onSearch (value) {
+      console.log(value)
+    }
+  }
+}
 </script>

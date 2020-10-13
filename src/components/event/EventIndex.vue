@@ -18,11 +18,13 @@
         <br>
 
         <a-card title="分类活动" :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
-          <event-select></event-select>
+          <event-select v-on:selectCategory="selectCategory"></event-select>
           <br>
-          <event-content></event-content>
-          <br>
-          <pagination></pagination>
+          <div v-if="selected">
+            <event-list :events="eventDTOs"></event-list>
+            <br>
+            <pagination :count="count" :start="start" :total="total" :categoryList="categoryList"></pagination>
+          </div>
         </a-card>
 
       </a-layout>
@@ -34,14 +36,14 @@
 import SideMenu from '@/components/common/SideMenu'
 import EventCarousel from './EventCarousel'
 import EventSelect from './EventSelect'
-import EventContent from './EventContent'
+import EventList from './EventList'
 import Pagination from '@/components/common/Pagination'
 export default {
   components: {
     SideMenu,
     EventCarousel,
     EventSelect,
-    EventContent,
+    EventList,
     Pagination
   },
   data () {
@@ -51,7 +53,23 @@ export default {
         { href: '/event/search', name: '搜索', type: 'laptop' },
         { href: '/event/recommend', name: '推荐', type: 'notification' }
       ],
-      selectedKeys: [0]
+      selectedKeys: [0],
+      selected: false
+    }
+  },
+  methods: {
+    selectCategory: function (data, categoryList) {
+      console.log("selectCategory", data, categoryList)
+      if (data == null) {
+        this.selected = false
+      } else {
+        this.count = data.count
+        this.eventDTOs = data.eventDTOs
+        this.start = data.start
+        this.total = data.total
+        this.selected = true
+        this.categoryList = categoryList
+      }
     }
   }
 }

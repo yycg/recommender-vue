@@ -60,7 +60,7 @@ export default {
               value: '其他',
               label: '其他'
             }
-          ],
+          ]
         },
         {
           value: '聚会',
@@ -98,7 +98,7 @@ export default {
               value: '派对',
               label: '派对'
             }
-          ],
+          ]
         },
         {
           value: '电影',
@@ -166,6 +166,21 @@ export default {
   methods: {
     onChange (value) {
       console.log(value)
+      if (value.length == 0) {
+        this.$emit('selectCategory')
+      } else {
+        this.$axios.get('/event/category', {
+          params: {
+            category: value[0],
+            subcategory: value.length > 1 ? value[1] : null,
+            start: 0,
+            count: 10
+          }
+        }).then(res => {
+          console.log(res.data)
+          this.$emit('selectCategory', res.data.data, value)
+        })
+      }
     }
   }
 }

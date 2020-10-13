@@ -14,7 +14,7 @@
           <recommend-select></recommend-select>
           <br>
           <br>
-          <event-content></event-content>
+          <event-list></event-list>
           <br>
           <pagination></pagination>
         </a-card>
@@ -27,13 +27,13 @@
 <script>
 import SideMenu from '@/components/common/SideMenu'
 import RecommendSelect from '@/components/common/RecommendSelect'
-import EventContent from './EventContent'
+import EventList from './EventList'
 import Pagination from '@/components/common/Pagination'
 export default {
   components: {
     SideMenu,
     RecommendSelect,
-    EventContent,
+    EventList,
     Pagination
   },
   data () {

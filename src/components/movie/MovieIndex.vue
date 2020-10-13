@@ -13,7 +13,7 @@
         <a-card title="分类电影" :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
           <event-select></event-select>
           <br>
-          <event-content></event-content>
+          <event-list></event-list>
           <br>
           <pagination></pagination>
         </a-card>
