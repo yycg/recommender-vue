@@ -66,7 +66,7 @@ export default new Router({
           component: () => import('../components/event/EventIndex')
         },
         {
-          path: '/event/detail',
+          path: '/event/detail/:id',
           name: 'EventDetail',
           component: () => import('../components/event/EventDetail')
         },

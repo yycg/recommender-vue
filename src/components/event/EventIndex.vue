@@ -2,7 +2,7 @@
   <a-layout id="components-layout-demo-top-side-2">
     <a-layout>
       <a-layout-sider width="200" style="background: #fff">
-        <side-menu></side-menu>
+        <side-menu :sideMenuList="sideMenuList" :selectedKeys="selectedKeys"></side-menu>
       </a-layout-sider>
       <a-layout style="padding: 0 24px 24px">
         <a-breadcrumb style="margin: 16px 0">
@@ -46,12 +46,12 @@ export default {
   },
   data () {
     return {
-      collapsed: false,
-      sideBarList: [
-        { href: '#', name: '探索' },
-        { href: '#', name: '搜索' },
-        { href: '#', name: '推荐' }
-      ]
+      sideMenuList: [
+        { href: '/event', name: '探索', type: 'user' },
+        { href: '/event/search', name: '搜索', type: 'laptop' },
+        { href: '/event/recommend', name: '推荐', type: 'notification' }
+      ],
+      selectedKeys: [0]
     }
   }
 }
