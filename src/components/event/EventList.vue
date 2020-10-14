@@ -64,7 +64,7 @@
             <a
               target="db-event-owner"
               href="https://www.douban.com/location/people/146256181/"
-              >艾米</a
+              >{{event.ownerName}}</a
             >
           </li>
         </ul>
