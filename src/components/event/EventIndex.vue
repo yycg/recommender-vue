@@ -23,7 +23,13 @@
           <div v-if="selected">
             <event-list :events="eventDTOs"></event-list>
             <br>
-            <pagination :count="count" :start="start" :total="total" :categoryList="categoryList"></pagination>
+            <pagination
+              v-on:selectCategory="selectCategory"
+              :count="count"
+              :start="start"
+              :total="total"
+              :categoryList="categoryList"
+            ></pagination>
           </div>
         </a-card>
 
