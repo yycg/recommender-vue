@@ -11,12 +11,20 @@
         </a-breadcrumb>
 
         <a-card title="活动搜索" :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
-          <event-input></event-input>
+          <event-input v-on:search="search"></event-input>
           <br>
           <br>
-          <event-list></event-list>
-          <br>
-          <pagination></pagination>
+          <div v-if="searched">
+            <event-list :events="eventDTOs"></event-list>
+            <br>
+            <pagination
+              v-on:search="search"
+              :count="count"
+              :start="start"
+              :total="total"
+              :keyword="keyword"
+            ></pagination>
+          </div>
         </a-card>
 
       </a-layout>
@@ -43,7 +51,24 @@ export default {
         { href: '/event/search', name: '搜索', type: 'laptop' },
         { href: '/event/recommend', name: '推荐', type: 'notification' }
       ],
-      selectedKeys: [1]
+      selectedKeys: [1],
+      count: 0,
+      eventDTOs: {},
+      start: 0,
+      total: 0,
+      searched: false,
+      keyword: ''
+    }
+  },
+  methods: {
+    search: function (data, keyword) {
+      console.log("search", data, keyword)
+      this.count = data.count
+      this.eventDTOs = data.eventDTOs
+      this.start = data.start
+      this.total = data.total
+      this.searched = true
+      this.keyword = keyword
     }
   }
 }

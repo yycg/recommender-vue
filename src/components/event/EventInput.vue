@@ -15,7 +15,7 @@ export default {
         }
       }).then(res => {
         console.log(res.data)
-        this.$emit('onSearch', res.data.data, value)
+        this.$emit('search', res.data.data, value)
       })
     }
   }
