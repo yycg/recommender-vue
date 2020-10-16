@@ -14,13 +14,13 @@
 
 <script>
 export default {
-  props: ['count', 'start', 'total', 'categoryList'],
+  props: ['count', 'start', 'total', 'keyword'],
   data () {
     return {
       countProp: this.count,
       startProp: this.start,
       totalProp: this.total,
-      categoryListProp: this.categoryList
+      keywordProp: this.keyword
     }
   },
   computed: {
@@ -54,22 +54,17 @@ export default {
       this.queryEventList()
     },
     queryEventList() {
-      console.log(this.categoryListProp)
-      if (this.categoryListProp.length == 0) {
-        this.$emit('selectCategory')
-      } else {
-        this.$axios.get('/event/category', {
-          params: {
-            category: this.categoryListProp[0],
-            subcategory: this.categoryListProp.length > 1 ? this.categoryListProp[1] : null,
-            start: this.startProp,
-            count: this.countProp
-          }
-        }).then(res => {
-          console.log(res.data)
-          this.$emit('selectCategory', res.data.data, this.categoryListProp)
-        })
-      }
+      console.log(this.keywordProp)
+      this.$axios.get('/event/search', {
+        params: {
+          keyword: this.keywordProp,
+          start: this.startProp,
+          count: this.countProp
+        }
+      }).then(res => {
+        console.log(res.data)
+        this.$emit('search', res.data.data, this.keywordProp)
+      })
     }
   }
 }
