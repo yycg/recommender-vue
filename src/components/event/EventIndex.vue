@@ -43,7 +43,7 @@ import SideMenu from '@/components/common/SideMenu'
 import EventCarousel from './EventCarousel'
 import EventSelect from './EventSelect'
 import EventList from './EventList'
-import Pagination from '@/components/common/Pagination'
+import Pagination from './EventExplorePagination'
 export default {
   components: {
     SideMenu,

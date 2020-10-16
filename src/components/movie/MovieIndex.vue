@@ -25,7 +25,7 @@
 
 <script>
 import SideMenu from '@/components/common/SideMenu'
-import Pagination from '@/components/common/Pagination'
+import Pagination from './MovieExplorePagination'
 export default {
   components: {
     SideMenu,

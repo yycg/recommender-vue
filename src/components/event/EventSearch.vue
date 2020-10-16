@@ -28,7 +28,7 @@
 import SideMenu from '@/components/common/SideMenu'
 import EventInput from './EventInput'
 import EventList from './EventList'
-import Pagination from '@/components/common/Pagination'
+import Pagination from './EventSearchPagination'
 export default {
   components: {
     SideMenu,

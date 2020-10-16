@@ -28,7 +28,7 @@
 import SideMenu from '@/components/common/SideMenu'
 import RecommendSelect from '@/components/common/RecommendSelect'
 import EventList from './EventList'
-import Pagination from '@/components/common/Pagination'
+import Pagination from './EventRecommendPagination'
 export default {
   components: {
     SideMenu,
