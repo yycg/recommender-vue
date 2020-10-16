@@ -4,8 +4,8 @@
       show-quick-jumper
       show-size-changer
       :current="current"
-      :total="totalProp"
-      :pageSize="countProp"
+      :total="total"
+      :pageSize="count"
       @showSizeChange="onShowSizeChange"
       @change="onChange"
     />
@@ -15,21 +15,13 @@
 <script>
 export default {
   props: ['count', 'start', 'total', 'keyword'],
-  data () {
-    return {
-      countProp: this.count,
-      startProp: this.start,
-      totalProp: this.total,
-      keywordProp: this.keyword
-    }
-  },
   computed: {
     current: {
       get: function () {
-        return this.startProp / this.countProp + 1
+        return this.start / this.count + 1
       },
       set: function (newValue) {
-        this.startProp = (newValue - 1) * this.countProp;
+        this.start = (newValue - 1) * this.count;
       }
     }
   },
@@ -44,7 +36,7 @@ export default {
   methods: {
     onShowSizeChange(current, pageSize) {
       console.log(current, pageSize)
-      this.countProp = pageSize
+      this.count = pageSize
       this.current = 1
       this.queryEventList()
     },
@@ -54,16 +46,16 @@ export default {
       this.queryEventList()
     },
     queryEventList() {
-      console.log(this.keywordProp)
+      console.log(this.keyword)
       this.$axios.get('/event/search', {
         params: {
-          keyword: this.keywordProp,
-          start: this.startProp,
-          count: this.countProp
+          keyword: this.keyword,
+          start: this.start,
+          count: this.count
         }
       }).then(res => {
         console.log(res.data)
-        this.$emit('search', res.data.data, this.keywordProp)
+        this.$emit('search', res.data.data, this.keyword)
       })
     }
   }

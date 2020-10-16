@@ -4,8 +4,8 @@
       show-quick-jumper
       show-size-changer
       :current="current"
-      :total="totalProp"
-      :pageSize="countProp"
+      :total="total"
+      :pageSize="count"
       @showSizeChange="onShowSizeChange"
       @change="onChange"
     />
@@ -15,21 +15,13 @@
 <script>
 export default {
   props: ['count', 'start', 'total', 'algorithm'],
-  data () {
-    return {
-      countProp: this.count,
-      startProp: this.start,
-      totalProp: this.total,
-      algorithmProp: this.algorithm
-    }
-  },
   computed: {
     current: {
       get: function () {
-        return this.startProp / this.countProp + 1
+        return this.start / this.count + 1
       },
       set: function (newValue) {
-        this.startProp = (newValue - 1) * this.countProp;
+        this.start = (newValue - 1) * this.count;
       }
     }
   },
@@ -44,7 +36,7 @@ export default {
   methods: {
     onShowSizeChange(current, pageSize) {
       console.log(current, pageSize)
-      this.countProp = pageSize
+      this.count = pageSize
       this.current = 1
       this.queryEventList()
     },
@@ -54,16 +46,16 @@ export default {
       this.queryEventList()
     },
     queryEventList() {
-      console.log(this.algorithmProp)
+      console.log(this.algorithm)
       this.$axios.get('/event/recommend', {
         params: {
-          algorithm: this.algorithmProp,
-          start: this.startProp,
-          count: this.countProp
+          algorithm: this.algorithm,
+          start: this.start,
+          count: this.count
         }
       }).then(res => {
         console.log(res.data)
-        this.$emit('recommend', res.data.data, this.algorithmProp)
+        this.$emit('recommend', res.data.data, this.algorithm)
       })
     }
   }

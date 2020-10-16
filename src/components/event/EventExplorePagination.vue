@@ -4,8 +4,8 @@
       show-quick-jumper
       show-size-changer
       :current="current"
-      :total="totalProp"
-      :pageSize="countProp"
+      :total="total"
+      :pageSize="count"
       @showSizeChange="onShowSizeChange"
       @change="onChange"
     />
@@ -15,21 +15,13 @@
 <script>
 export default {
   props: ['count', 'start', 'total', 'categoryList'],
-  data () {
-    return {
-      countProp: this.count,
-      startProp: this.start,
-      totalProp: this.total,
-      categoryListProp: this.categoryList
-    }
-  },
   computed: {
     current: {
       get: function () {
-        return this.startProp / this.countProp + 1
+        return this.start / this.count + 1
       },
       set: function (newValue) {
-        this.startProp = (newValue - 1) * this.countProp;
+        this.start = (newValue - 1) * this.count;
       }
     }
   },
@@ -44,7 +36,7 @@ export default {
   methods: {
     onShowSizeChange(current, pageSize) {
       console.log(current, pageSize)
-      this.countProp = pageSize
+      this.count = pageSize
       this.current = 1
       this.queryEventList()
     },
@@ -54,20 +46,20 @@ export default {
       this.queryEventList()
     },
     queryEventList() {
-      console.log(this.categoryListProp)
-      if (this.categoryListProp.length == 0) {
+      console.log(this.categoryList)
+      if (this.categoryList.length == 0) {
         this.$emit('selectCategory')
       } else {
         this.$axios.get('/event/category', {
           params: {
-            category: this.categoryListProp[0],
-            subcategory: this.categoryListProp.length > 1 ? this.categoryListProp[1] : null,
-            start: this.startProp,
-            count: this.countProp
+            category: this.categoryList[0],
+            subcategory: this.categoryList.length > 1 ? this.categoryList[1] : null,
+            start: this.start,
+            count: this.count
           }
         }).then(res => {
           console.log(res.data)
-          this.$emit('selectCategory', res.data.data, this.categoryListProp)
+          this.$emit('selectCategory', res.data.data, this.categoryList)
         })
       }
     }
