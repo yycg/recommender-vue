@@ -14,13 +14,13 @@
 
 <script>
 export default {
-  props: ['count', 'start', 'total', 'categoryList'],
+  props: ['count', 'start', 'total', 'algorithm'],
   data () {
     return {
       countProp: this.count,
       startProp: this.start,
       totalProp: this.total,
-      categoryListProp: this.categoryList
+      algorithmProp: this.algorithm
     }
   },
   computed: {
@@ -54,22 +54,17 @@ export default {
       this.queryEventList()
     },
     queryEventList() {
-      console.log(this.categoryListProp)
-      if (this.categoryListProp.length == 0) {
-        this.$emit('selectCategory')
-      } else {
-        this.$axios.get('/event/category', {
-          params: {
-            category: this.categoryListProp[0],
-            subcategory: this.categoryListProp.length > 1 ? this.categoryListProp[1] : null,
-            start: this.startProp,
-            count: this.countProp
-          }
-        }).then(res => {
-          console.log(res.data)
-          this.$emit('selectCategory', res.data.data, this.categoryListProp)
-        })
-      }
+      console.log(this.algorithmProp)
+      this.$axios.get('/event/recommend', {
+        params: {
+          algorithm: this.algorithmProp,
+          start: this.startProp,
+          count: this.countProp
+        }
+      }).then(res => {
+        console.log(res.data)
+        this.$emit('recommend', res.data.data, this.algorithmProp)
+      })
     }
   }
 }
