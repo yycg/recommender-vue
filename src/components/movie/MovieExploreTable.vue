@@ -79,14 +79,9 @@ const columns = [
 ]
 
 export default {
-  props: ["movies", "count", "start", "total", "year", "country", "genre", "subtype"],
+  props: ["movies", "count", "start", "total", "year", "country", "genre", "subtype", "pagination"],
   data() {
     return {
-      pagination: {
-        current: this.start / this.count + 1,
-        total: this.total,
-        pageSize: this.count
-      },
       loading: false,
       columns
     };
@@ -104,18 +99,7 @@ export default {
       },
       set: function (newValue) {
       }
-    },
-    current: {
-      get: function () {
-        return this.start / this.count + 1
-      },
-      set: function (newValue) {
-        this.start = (newValue - 1) * this.count;
-      }
     }
-  },
-  mounted () {
-    console.log("mounted", this.current, this.total, this.count)
   },
   methods: {
     handleTableChange (pagination, filters, sorter) {

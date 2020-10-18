@@ -27,6 +27,7 @@
             :country="country"
             :genre="genre"
             :subtype="subtype"
+            :pagination="pagination"
           ></movie-explore-table>
         </a-card>
 
@@ -63,7 +64,8 @@ export default {
       year: 0,
       country: "",
       genre: "",
-      subtype: ""
+      subtype: "",
+      pagination: {}
     }
   },
   methods: {
@@ -77,6 +79,11 @@ export default {
       this.country = country
       this.genre = genre
       this.subtype = subtype
+      this.pagination = {
+        current: this.start / this.count + 1,
+        total: this.total,
+        pageSize: this.count
+      }
       console.log(this.movies, this.count, this.start, this.start, this.total, this.year, this.country,
       this.genre, this.subtype)
     }
