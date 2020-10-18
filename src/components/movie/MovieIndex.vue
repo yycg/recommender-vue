@@ -23,6 +23,10 @@
             :count="count"
             :start="start"
             :total="total"
+            :year="year"
+            :country="country"
+            :genre="genre"
+            :subtype="subtype"
           ></movie-explore-table>
         </a-card>
 
@@ -55,16 +59,26 @@ export default {
       movies: [],
       count: 0,
       start: 0,
-      total: 0
+      total: 0,
+      year: 0,
+      country: "",
+      genre: "",
+      subtype: ""
     }
   },
   methods: {
-    select: function (data) {
+    select: function (data, year, country, genre, subtype) {
       console.log("select", data)
       this.movies = data.moviePOs
       this.count = data.count
       this.start = data.start
       this.total = data.total
+      this.year = year
+      this.country = country
+      this.genre = genre
+      this.subtype = subtype
+      console.log(this.movies, this.count, this.start, this.start, this.total, this.year, this.country,
+      this.genre, this.subtype)
     }
   }
 }

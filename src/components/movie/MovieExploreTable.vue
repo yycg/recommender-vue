@@ -1,99 +1,94 @@
 <template>
-  <a-table :columns="columns" :data-source="data">
-<!--    <a slot="name" slot-scope="text">{{ text }}</a>-->
-<!--    <span slot="customTitle"><a-icon type="smile-o" /> Name</span>-->
-<!--    <span slot="tags" slot-scope="tags">-->
-<!--      <a-tag-->
-<!--        v-for="tag in tags"-->
-<!--        :key="tag"-->
-<!--        :color="tag === 'loser' ? 'volcano' : tag.length > 5 ? 'geekblue' : 'green'"-->
-<!--      >-->
-<!--        {{ tag.toUpperCase() }}-->
-<!--      </a-tag>-->
-<!--    </span>-->
-<!--    <span slot="action" slot-scope="text, record">-->
-<!--      <a>Invite 一 {{ record.name }}</a>-->
-<!--      <a-divider type="vertical" />-->
-<!--      <a>Delete</a>-->
-<!--      <a-divider type="vertical" />-->
-<!--      <a class="ant-dropdown-link"> More actions <a-icon type="down" /> </a>-->
-<!--    </span>-->
+  <a-table
+    :columns="columns"
+    :data-source="data"
+    :pagination="pagination"
+    :loading="loading"
+    @change="handleTableChange"
+  >
   </a-table>
 </template>
 
 <script>
+const columns = [
+  {
+    title: '片名',
+    dataIndex: 'title',
+    key: 'title'
+  },
+  {
+    title: '原名',
+    dataIndex: 'originalTitle',
+    key: 'originalTitle',
+  },
+  {
+    title: '又名',
+    dataIndex: 'aka',
+    key: 'aka',
+  },
+  {
+    title: '评分',
+    dataIndex: 'rating',
+    key: 'rating',
+  },
+  {
+    title: '年份',
+    dataIndex: 'year',
+    key: 'year',
+  },
+  {
+    title: '国家',
+    dataIndex: 'countries',
+    key: 'countries',
+  },
+  {
+    title: '类型',
+    dataIndex: 'genres',
+    key: 'genres',
+  },
+  // {
+  //   title: '剧情简介',
+  //   dataIndex: 'summary',
+  //   key: 'summary',
+  // },
+  // {
+  //   title: '评分人数',
+  //   dataIndex: 'ratingsCount',
+  //   key: 'ratingsCount',
+  // },
+  // {
+  //   title: '短评人数',
+  //   dataIndex: 'commentsCount',
+  //   key: 'commentsCount',
+  // },
+  // {
+  //   title: '长评人数',
+  //   dataIndex: 'reviewsCount',
+  //   key: 'reviewsCount',
+  // },
+  // {
+  //   title: '长评人数',
+  //   dataIndex: 'reviewsCount',
+  //   key: 'reviewsCount',
+  // },
+  // {
+  //   title: '电影/电视',
+  //   dataIndex: 'subtype',
+  //   key: 'subtype',
+  // },
+]
+
 export default {
-  props: ["movies", "count", "start", "total"],
+  props: ["movies", "count", "start", "total", "year", "country", "genre", "subtype"],
   data() {
     return {
-      //data: this.movies,
-      columns: [
-        {
-          title: '片名',
-          dataIndex: 'title',
-          key: 'title'
-        },
-        {
-          title: '原名',
-          dataIndex: 'originalTitle',
-          key: 'originalTitle',
-        },
-        {
-          title: '又名',
-          dataIndex: 'aka',
-          key: 'aka',
-        },
-        {
-          title: '评分',
-          dataIndex: 'rating',
-          key: 'rating',
-        },
-        {
-          title: '年份',
-          dataIndex: 'year',
-          key: 'year',
-        },
-        {
-          title: '国家',
-          dataIndex: 'countries',
-          key: 'countries',
-        },
-        {
-          title: '类型',
-          dataIndex: 'genres',
-          key: 'genres',
-        },
-        // {
-        //   title: '剧情简介',
-        //   dataIndex: 'summary',
-        //   key: 'summary',
-        // },
-        // {
-        //   title: '评分人数',
-        //   dataIndex: 'ratingsCount',
-        //   key: 'ratingsCount',
-        // },
-        // {
-        //   title: '短评人数',
-        //   dataIndex: 'commentsCount',
-        //   key: 'commentsCount',
-        // },
-        // {
-        //   title: '长评人数',
-        //   dataIndex: 'reviewsCount',
-        //   key: 'reviewsCount',
-        // },
-        // {
-        //   title: '长评人数',
-        //   dataIndex: 'reviewsCount',
-        //   key: 'reviewsCount',
-        // },
-        // {
-        //   title: '电影/电视',
-        //   dataIndex: 'subtype',
-        //   key: 'subtype',
-        // },
-      ]
+      pagination: {
+        current: this.start / this.count + 1,
+        total: this.total,
+        pageSize: this.count
+      },
+      loading: false,
+      columns
     };
   },
   computed: {
@@ -109,7 +104,36 @@ export default {
       },
       set: function (newValue) {
       }
+    },
+    current: {
+      get: function () {
+        return this.start / this.count + 1
+      },
+      set: function (newValue) {
+        this.start = (newValue - 1) * this.count;
+      }
     }
   },
+  mounted () {
+    console.log("mounted", this.current, this.total, this.count)
+  },
+  methods: {
+    handleTableChange (pagination, filters, sorter) {
+      console.log(pagination);
+      this.$axios.get('/movie/condition', {
+        params: {
+          year: this.year,
+          country: this.country,
+          genre: this.genre,
+          subtype: this.subtype,
+          start: this.start,
+          count: this.count
+        }
+      }).then(res => {
+        console.log(res.data)
+        this.$emit('select', res.data.data, this.year, this.country, this.genre, this.subtype)
+      })
+    }
+  }
 };
 </script>

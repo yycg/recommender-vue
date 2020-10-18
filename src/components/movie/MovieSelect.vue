@@ -84,7 +84,7 @@ export default {
         }
       }).then(res => {
         console.log(res.data)
-        this.$emit('select', res.data.data)
+        this.$emit('select', res.data.data, this.year, this.country, this.genre, this.subtype)
       })
     }
   },
