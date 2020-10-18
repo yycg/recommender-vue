@@ -21,11 +21,11 @@ const columns = [
     dataIndex: 'originalTitle',
     key: 'originalTitle',
   },
-  {
-    title: '又名',
-    dataIndex: 'aka',
-    key: 'aka',
-  },
+  // {
+  //   title: '又名',
+  //   dataIndex: 'aka',
+  //   key: 'aka',
+  // },
   {
     title: '评分',
     dataIndex: 'rating',
@@ -110,8 +110,8 @@ export default {
           country: this.country,
           genre: this.genre,
           subtype: this.subtype,
-          start: this.start,
-          count: this.count
+          start: (pagination.current - 1) * pagination.pageSize,
+          count: pagination.pageSize
         }
       }).then(res => {
         console.log(res.data)

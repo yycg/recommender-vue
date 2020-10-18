@@ -19,6 +19,7 @@
           <movie-select v-on:select="select"></movie-select>
           <br>
           <movie-explore-table
+            v-on:select="select"
             :movies="movies"
             :count="count"
             :start="start"
