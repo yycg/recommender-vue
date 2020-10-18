@@ -6,6 +6,24 @@
     :loading="loading"
     @change="handleTableChange"
   >
+    <span slot="countries" slot-scope="countries">
+      <a-tag
+        v-for="tag in countries"
+        :key="tag"
+        color="geekblue"
+      >
+        {{ tag.toUpperCase() }}
+      </a-tag>
+    </span>
+    <span slot="genres" slot-scope="genres">
+      <a-tag
+        v-for="tag in genres"
+        :key="tag"
+        color="green"
+      >
+        {{ tag.toUpperCase() }}
+      </a-tag>
+    </span>
   </a-table>
 </template>
 
@@ -14,12 +32,14 @@ const columns = [
   {
     title: '片名',
     dataIndex: 'title',
-    key: 'title'
+    key: 'title',
+    width: '20%',
   },
   {
     title: '原名',
     dataIndex: 'originalTitle',
     key: 'originalTitle',
+    width: '20%',
   },
   // {
   //   title: '又名',
@@ -40,11 +60,13 @@ const columns = [
     title: '国家',
     dataIndex: 'countries',
     key: 'countries',
+    scopedSlots: { customRender: 'countries' },
   },
   {
     title: '类型',
     dataIndex: 'genres',
     key: 'genres',
+    scopedSlots: { customRender: 'genres' },
   },
   // {
   //   title: '剧情简介',
@@ -93,6 +115,8 @@ export default {
         for (let i = 0; i < this.movies.length; i++) {
           movies.push(this.movies[i])
           movies[i].key = i.toString()
+          movies[i].countries = movies[i].countries.split(",")
+          movies[i].genres = movies[i].genres.split(",")
         }
         console.log("getData", movies)
         return movies
