@@ -2,7 +2,7 @@
   <a-layout id="components-layout-demo-top-side-2">
     <a-layout>
       <a-layout-sider width="200" style="background: #fff">
-        <side-menu></side-menu>
+        <side-menu :sideMenuList="sideMenuList" :selectedKeys="selectedKeys"></side-menu>
       </a-layout-sider>
       <a-layout style="padding: 0 24px 24px">
         <a-breadcrumb style="margin: 16px 0">
@@ -10,12 +10,20 @@
           <a-breadcrumb-item>探索</a-breadcrumb-item>
         </a-breadcrumb>
 
+        <a-card title="高分电影" :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
+          <top-movie-table></top-movie-table>
+        </a-card>
+        <br>
+
         <a-card title="分类电影" :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
-          <event-select></event-select>
+          <movie-select v-on:select="select"></movie-select>
           <br>
-          <event-list></event-list>
-          <br>
-          <pagination></pagination>
+          <movie-explore-table
+            :movies="movies"
+            :count="count"
+            :start="start"
+            :total="total"
+          ></movie-explore-table>
         </a-card>
 
       </a-layout>
@@ -25,20 +33,38 @@
 
 <script>
 import SideMenu from '@/components/common/SideMenu'
-import Pagination from './MovieExplorePagination'
+import MovieSelect from './MovieSelect'
+import MovieExploreTable from './MovieExploreTable'
+import TopMovieTable from './TopMovieTable'
 export default {
   components: {
     SideMenu,
-    Pagination
+    MovieSelect,
+    MovieExploreTable,
+    TopMovieTable
   },
   data () {
     return {
-      collapsed: false,
-      sideBarList: [
-        { href: '#', name: '探索' },
-        { href: '#', name: '搜索' },
-        { href: '#', name: '推荐' }
-      ]
+      sideMenuList: [
+        { href: '/event', name: '探索', type: 'user' },
+        { href: '/event/search', name: '搜索', type: 'laptop' },
+        { href: '/event/recommend', name: '推荐', type: 'notification' }
+      ],
+      selectedKeys: [0],
+      selected: false,
+      movies: [],
+      count: 0,
+      start: 0,
+      total: 0
+    }
+  },
+  methods: {
+    select: function (data) {
+      console.log("select", data)
+      this.movies = data.moviePOs
+      this.count = data.count
+      this.start = data.start
+      this.total = data.total
     }
   }
 }
