@@ -11,9 +11,16 @@
         </a-breadcrumb>
 
         <a-card title="电影搜索" :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
-          <movie-input></movie-input>
+          <movie-input v-on:search="search"></movie-input>
           <br>
-          <movie-table></movie-table>
+          <movie-table
+            :movies="movies"
+            :start="start"
+            :count="count"
+            :total="total"
+            :pagination="pagination"
+            :loading="loading"
+          ></movie-table>
         </a-card>
 
         <br>
@@ -26,7 +33,7 @@
 <script>
 import SideMenu from '@/components/common/SideMenu'
 import MovieInput from './MovieInput'
-import MovieTable from '@/components/common/Table'
+import MovieTable from './MovieSearchTable'
 export default {
   components: {
     SideMenu,
@@ -40,7 +47,26 @@ export default {
         { href: '/movie/search', name: '搜索', type: 'laptop' },
         { href: '/movie/recommend', name: '推荐', type: 'notification' }
       ],
-      selectedKeys: [1]
+      selectedKeys: [1],
+      movies: [],
+      count: 0,
+      start: 0,
+      total: 0,
+      pagination: {},
+      loading: false
+    }
+  },
+  methods: {
+    search (data) {
+      this.movies = data.moviePOs
+      this.count = data.count
+      this.start = data.start
+      this.total = data.total
+      this.pagination = {
+        current: this.start / this.count + 1,
+        total: this.total,
+        pageSize: this.count
+      }
     }
   }
 }
