@@ -18,6 +18,7 @@
             :start="start"
             :total="total"
             :pagination="topPagination"
+            :loading="topLoading"
           ></top-movie-table>
         </a-card>
         <br>
@@ -36,6 +37,7 @@
             :genre="genre"
             :subtype="subtype"
             :pagination="pagination"
+            :loading="loading"
           ></movie-explore-table>
         </a-card>
 
@@ -74,11 +76,13 @@ export default {
       genre: "",
       subtype: "",
       pagination: {},
+      loading: false,
       topMovies: {},
       topCount: 0,
       topStart: 0,
       topTotal: 0,
-      topPagination: {}
+      topPagination: {},
+      topLoading: false
     }
   },
   methods: {
@@ -97,6 +101,7 @@ export default {
         total: this.total,
         pageSize: this.count
       }
+      this.loading = false
     },
     topTableChange: function (data) {
       console.log("topTableChange", data)
@@ -109,6 +114,7 @@ export default {
         total: this.topTotal,
         pageSize: this.topCount
       }
+      this.topLoading = false
     }
   },
   mounted () {

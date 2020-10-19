@@ -101,7 +101,7 @@ const columns = [
 ]
 
 export default {
-  props: ["movies", "count", "start", "total", "year", "country", "genre", "subtype", "pagination"],
+  props: ["movies", "count", "start", "total", "year", "country", "genre", "subtype", "pagination", "loading"],
   data() {
     return {
       loading: false,
@@ -128,6 +128,7 @@ export default {
   methods: {
     handleTableChange (pagination, filters, sorter) {
       console.log(pagination);
+      this.loading = true
       this.$axios.get('/movie/condition', {
         params: {
           year: this.year,

@@ -101,7 +101,7 @@ const columns = [
 ]
 
 export default {
-  props: ["movies", "count", "start", "total", "pagination"],
+  props: ["movies", "count", "start", "total", "pagination", "loading"],
   data() {
     return {
       loading: false,
@@ -128,6 +128,7 @@ export default {
   methods: {
     handleTableChange (pagination, filters, sorter) {
       console.log(pagination);
+      this.loading = true
       this.$axios.get('/movie/top', {
         params: {
           start: (pagination.current - 1) * pagination.pageSize,
