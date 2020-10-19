@@ -13,9 +13,8 @@
         <a-card title="法规搜索" :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
           <law-input></law-input>
           <br>
-          <law-table></law-table>
+          <search-table></search-table>
         </a-card>
-
         <br>
 
       </a-layout>
@@ -26,12 +25,12 @@
 <script>
 import SideMenu from '@/components/common/SideMenu'
 import LawInput from './LawInput'
-import LawTable from '@/components/common/Table'
+import SearchTable from './SearchTable'
 export default {
   components: {
     SideMenu,
     LawInput,
-    LawTable
+    SearchTable
   },
   data () {
     return {

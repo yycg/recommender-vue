@@ -28,7 +28,7 @@
 <script>
 import SideMenu from '@/components/common/SideMenu'
 import RecommendSelect from '@/components/common/RecommendSelect'
-import CheckableTree from '@/components/common/CheckableTree'
+import CheckableTree from './CheckableTree'
 export default {
   components: {
     SideMenu,

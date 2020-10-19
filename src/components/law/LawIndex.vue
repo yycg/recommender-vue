@@ -23,7 +23,7 @@
 
 <script>
 import SideMenu from '@/components/common/SideMenu'
-import Tree from '@/components/common/Tree'
+import Tree from './Tree'
 export default {
   components: {
     SideMenu,

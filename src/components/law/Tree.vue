@@ -27,6 +27,7 @@ export default {
   },
 };
 
+/* eslint-disable */
 const treeData = [
   {
     "children": [
