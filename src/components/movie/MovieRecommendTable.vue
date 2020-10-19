@@ -101,7 +101,7 @@ const columns = [
 ]
 
 export default {
-  props: ["movies", "count", "start", "total", "pagination", "loading"],
+  props: ["movies", "count", "start", "total", "pagination", "loading", "movieTitles", "algorithm"],
   data() {
     return {
       columns
@@ -127,15 +127,23 @@ export default {
   methods: {
     handleTableChange (pagination, filters, sorter) {
       console.log(pagination);
+      const qs = require('qs')
       this.loading = true
-      this.$axios.get('/movie/top', {
+      this.$axios.get('/movie/recommend', {
         params: {
+          algorithm: this.algorithm,
+          movieTitles: this.movieTitles,
           start: (pagination.current - 1) * pagination.pageSize,
           count: pagination.pageSize
+        },
+        // https://segmentfault.com/q/1010000010323643
+        // 解决GET请求传数组的问题
+        paramsSerializer: function(params) {
+          return qs.stringify(params, {arrayFormat: 'repeat'})
         }
       }).then(res => {
         console.log(res.data)
-        this.$emit('topTableChange', res.data.data)
+        this.$emit('recommendTableChange', res.data.data)
       })
     }
   }

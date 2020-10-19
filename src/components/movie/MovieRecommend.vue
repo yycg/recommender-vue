@@ -20,12 +20,15 @@
           </a-button>
           <br>
           <movie-recommend-table
+            v-on:recommendTableChange="recommendTableChange"
             :movies="movies"
             :count="count"
             :start="start"
             :total="total"
             :pagination="pagination"
             :loading="loading"
+            :movieTitles="movieTitles"
+            :algorithm="algorithm"
           ></movie-recommend-table>
         </a-card>
 
@@ -97,6 +100,19 @@ export default {
         }
         this.loading = false
       })
+    },
+    recommendTableChange (data) {
+      console.log("recommendTableChange")
+      this.movies = data.moviePOs
+      this.count = data.count
+      this.start = data.start
+      this.total = data.total
+      this.pagination = {
+        current: this.start / this.count + 1,
+        total: this.total,
+        pageSize: this.count
+      }
+      this.loading = false
     }
   }
 }
