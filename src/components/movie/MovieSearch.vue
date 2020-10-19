@@ -11,7 +11,7 @@
         </a-breadcrumb>
 
         <a-card title="电影搜索" :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
-          <movie-input v-on:search="search" :loading="loading"></movie-input>
+          <movie-input v-on:search="search" v-on:load="load"></movie-input>
           <br>
           <movie-table
             v-on:searchTableChange="searchTableChange"
@@ -85,6 +85,9 @@ export default {
         pageSize: this.count
       }
       this.loading = false
+    },
+    load () {
+      this.loading = true
     }
   }
 }

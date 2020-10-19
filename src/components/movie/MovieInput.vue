@@ -4,10 +4,10 @@
 
 <script>
 export default {
-  props: ['loading'],
   methods: {
     onSearch (value) {
       console.log('onSearch', value)
+      this.$emit('load')
       this.loading = true
       this.keyword = value.data
       this.$axios.get('/movie/search', {
