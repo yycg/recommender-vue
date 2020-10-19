@@ -1,86 +1,143 @@
 <template>
-  <a-table :columns="columns" :data-source="data">
-    <a slot="name" slot-scope="text">{{ text }}</a>
-    <span slot="customTitle"><a-icon type="smile-o" /> Name</span>
-    <span slot="tags" slot-scope="tags">
+  <a-table
+    :columns="columns"
+    :data-source="data"
+    :pagination="pagination"
+    :loading="loading"
+    @change="handleTableChange"
+  >
+    <span slot="countries" slot-scope="countries">
       <a-tag
-        v-for="tag in tags"
+        v-for="tag in countries"
         :key="tag"
-        :color="tag === 'loser' ? 'volcano' : tag.length > 5 ? 'geekblue' : 'green'"
+        color="geekblue"
       >
         {{ tag.toUpperCase() }}
       </a-tag>
     </span>
-    <span slot="action" slot-scope="text, record">
-      <a>Invite 一 {{ record.name }}</a>
-      <a-divider type="vertical" />
-      <a>Delete</a>
-      <a-divider type="vertical" />
-      <a class="ant-dropdown-link"> More actions <a-icon type="down" /> </a>
+    <span slot="genres" slot-scope="genres">
+      <a-tag
+        v-for="tag in genres"
+        :key="tag"
+        color="green"
+      >
+        {{ tag.toUpperCase() }}
+      </a-tag>
     </span>
   </a-table>
 </template>
+
 <script>
 const columns = [
   {
-    dataIndex: 'name',
-    key: 'name',
-    slots: { title: 'customTitle' },
-    scopedSlots: { customRender: 'name' },
+    title: '片名',
+    dataIndex: 'title',
+    key: 'title',
+    width: '20%',
   },
   {
-    title: 'Age',
-    dataIndex: 'age',
-    key: 'age',
+    title: '原名',
+    dataIndex: 'originalTitle',
+    key: 'originalTitle',
+    width: '20%',
+  },
+  // {
+  //   title: '又名',
+  //   dataIndex: 'aka',
+  //   key: 'aka',
+  // },
+  {
+    title: '评分',
+    dataIndex: 'rating',
+    key: 'rating',
   },
   {
-    title: 'Address',
-    dataIndex: 'address',
-    key: 'address',
+    title: '年份',
+    dataIndex: 'year',
+    key: 'year',
   },
   {
-    title: 'Tags',
-    key: 'tags',
-    dataIndex: 'tags',
-    scopedSlots: { customRender: 'tags' },
+    title: '国家',
+    dataIndex: 'countries',
+    key: 'countries',
+    scopedSlots: { customRender: 'countries' },
   },
   {
-    title: 'Action',
-    key: 'action',
-    scopedSlots: { customRender: 'action' },
+    title: '类型',
+    dataIndex: 'genres',
+    key: 'genres',
+    scopedSlots: { customRender: 'genres' },
   },
-];
-
-const data = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-];
+  // {
+  //   title: '剧情简介',
+  //   dataIndex: 'summary',
+  //   key: 'summary',
+  // },
+  // {
+  //   title: '评分人数',
+  //   dataIndex: 'ratingsCount',
+  //   key: 'ratingsCount',
+  // },
+  // {
+  //   title: '短评人数',
+  //   dataIndex: 'commentsCount',
+  //   key: 'commentsCount',
+  // },
+  // {
+  //   title: '长评人数',
+  //   dataIndex: 'reviewsCount',
+  //   key: 'reviewsCount',
+  // },
+  // {
+  //   title: '长评人数',
+  //   dataIndex: 'reviewsCount',
+  //   key: 'reviewsCount',
+  // },
+  // {
+  //   title: '电影/电视',
+  //   dataIndex: 'subtype',
+  //   key: 'subtype',
+  // },
+]
 
 export default {
+  props: ["movies", "count", "start", "total", "pagination"],
   data() {
     return {
-      data,
-      columns,
+      loading: false,
+      columns
     };
   },
+  computed: {
+    data: {
+      get: function () {
+        var movies = []
+        for (let i = 0; i < this.movies.length; i++) {
+          movies.push(this.movies[i])
+          movies[i].key = i.toString()
+          movies[i].countries = movies[i].countries.split(",")
+          movies[i].genres = movies[i].genres.split(",")
+        }
+        console.log("getData", movies)
+        return movies
+      },
+      set: function (newValue) {
+      }
+    }
+  },
+  methods: {
+    handleTableChange (pagination, filters, sorter) {
+      console.log(pagination);
+      this.$axios.get('/movie/top', {
+        params: {
+          start: (pagination.current - 1) * pagination.pageSize,
+          count: pagination.pageSize
+        }
+      }).then(res => {
+        console.log(res.data)
+        this.$emit('topTableChange', res.data.data)
+      })
+    }
+  }
 };
 </script>
