@@ -115,8 +115,8 @@ export default {
         for (let i = 0; i < this.movies.length; i++) {
           movies.push(this.movies[i])
           movies[i].key = i.toString()
-          movies[i].countries = movies[i].countries.split(",")
-          movies[i].genres = movies[i].genres.split(",")
+          if(movies[i].countries != null) movies[i].countries = movies[i].countries.split(",")
+          if(movies[i].genres != null) movies[i].genres = movies[i].genres.split(",")
         }
         console.log("getData", movies)
         return movies

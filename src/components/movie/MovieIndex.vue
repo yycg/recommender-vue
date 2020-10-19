@@ -12,6 +12,7 @@
 
         <a-card title="高分电影" :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
           <top-movie-table
+            v-on:topTableChange="topTableChange"
             :movies="topMovies"
             :count="topCount"
             :start="start"
@@ -96,8 +97,18 @@ export default {
         total: this.total,
         pageSize: this.count
       }
-      console.log(this.movies, this.count, this.start, this.start, this.total, this.year, this.country,
-      this.genre, this.subtype)
+    },
+    topTableChange: function (data) {
+      console.log("topTableChange", data)
+      this.topMovies = data.moviePOs
+      this.topCount = data.count
+      this.topStart = data.start
+      this.topTotal = data.total
+      this.topPagination = {
+        current: this.topStart / this.topCount + 1,
+        total: this.topTotal,
+        pageSize: this.topCount
+      }
     }
   },
   mounted () {
