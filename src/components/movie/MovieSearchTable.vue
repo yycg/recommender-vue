@@ -101,7 +101,7 @@ const columns = [
 ]
 
 export default {
-  props: ["movies", "count", "start", "total", "pagination", "loading", "movieTitles", "algorithm"],
+  props: ["movies", "count", "start", "total", "pagination", "loading", "keyword"],
   data() {
     return {
       columns
@@ -127,12 +127,12 @@ export default {
   methods: {
     handleTableChange (pagination, filters, sorter) {
       console.log(pagination);
+      console.log("keyword", this.keyword)
       const qs = require('qs')
       this.loading = true
-      this.$axios.get('/movie/recommend', {
+      this.$axios.get('/movie/search', {
         params: {
-          algorithm: this.algorithm,
-          movieTitles: this.movieTitles,
+          keyword: this.keyword,
           start: (pagination.current - 1) * pagination.pageSize,
           count: pagination.pageSize
         },
@@ -143,7 +143,7 @@ export default {
         }
       }).then(res => {
         console.log(res.data)
-        this.$emit('recommendTableChange', res.data.data)
+        this.$emit('searchTableChange', res.data.data)
       })
     }
   }

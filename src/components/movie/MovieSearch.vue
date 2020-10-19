@@ -11,15 +11,17 @@
         </a-breadcrumb>
 
         <a-card title="电影搜索" :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
-          <movie-input v-on:search="search"></movie-input>
+          <movie-input v-on:search="search" :loading="loading"></movie-input>
           <br>
           <movie-table
+            v-on:searchTableChange="searchTableChange"
             :movies="movies"
             :start="start"
             :count="count"
             :total="total"
             :pagination="pagination"
             :loading="loading"
+            :keyword="keyword"
           ></movie-table>
         </a-card>
 
@@ -53,11 +55,13 @@ export default {
       start: 0,
       total: 0,
       pagination: {},
-      loading: false
+      loading: false,
+      keyword: ''
     }
   },
   methods: {
-    search (data) {
+    search (data, keyword) {
+      console.log("search", data, keyword)
       this.movies = data.moviePOs
       this.count = data.count
       this.start = data.start
@@ -67,6 +71,20 @@ export default {
         total: this.total,
         pageSize: this.count
       }
+      this.loading = false
+      this.keyword = keyword
+    },
+    searchTableChange (data) {
+      this.movies = data.moviePOs
+      this.count = data.count
+      this.start = data.start
+      this.total = data.total
+      this.pagination = {
+        current: this.start / this.count + 1,
+        total: this.total,
+        pageSize: this.count
+      }
+      this.loading = false
     }
   }
 }

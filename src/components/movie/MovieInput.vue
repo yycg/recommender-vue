@@ -4,19 +4,21 @@
 
 <script>
 export default {
+  props: ['loading'],
   methods: {
     onSearch (value) {
-      console.log(value)
-      this.keyword = value
+      console.log('onSearch', value)
+      this.loading = true
+      this.keyword = value.data
       this.$axios.get('/movie/search', {
         params: {
-          keyword: value,
+          keyword: value.data,
           start: 0,
           count: 10
         }
       }).then(res => {
         console.log(res.data)
-        this.$emit('search', res.data.data)
+        this.$emit('search', res.data.data, value.data)
       })
     }
   }
