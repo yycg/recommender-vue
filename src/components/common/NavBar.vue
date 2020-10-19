@@ -51,7 +51,7 @@ export default {
       navList: [
         { href: '/index', name: '首页' },
         { href: '/law', name: '法规' },
-        { href: '/medical', name: '医疗' },
+        // { href: '/medical', name: '医疗' },
         { href: '/movie', name: '电影' },
         { href: '/event', name: '活动' }
       ]
