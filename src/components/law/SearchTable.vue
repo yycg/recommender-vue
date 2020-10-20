@@ -43,7 +43,7 @@ export default {
         count: pagination.pageSize
       }, { indices: false })).then(res => {
         console.log(res.data)
-        this.$emit('recommendTableChange', res.data.data)
+        this.$emit('searchTableChange', res.data.data)
       })
     }
   }
