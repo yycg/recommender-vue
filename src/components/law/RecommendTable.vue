@@ -1,0 +1,94 @@
+<template>
+  <a-table
+    :columns="columns"
+    :data-source="data"
+    :pagination="pagination"
+    :loading="loading"
+    @change="handleTableChange"
+  >
+  </a-table>
+</template>
+
+<script>
+export default {
+  props: ["laws", "count", "start", "total", "pagination", "loading", "lawTitles", "algorithm"],
+  data() {
+    return {
+      columns
+    };
+  },
+  computed: {
+    data: {
+      get: function () {
+        var laws = []
+        for (let i = 0; i < this.laws.length; i++) {
+          laws.push(this.laws[i])
+          laws[i].key = i.toString()
+        }
+        console.log("getData", laws)
+        return laws
+      },
+      set: function (newValue) {
+      }
+    }
+  },
+  methods: {
+    handleTableChange (pagination, filters, sorter) {
+      console.log(pagination);
+      const qs = require('qs')
+      this.loading = true
+      this.$axios.get('/law/recommend', {
+        params: {
+          algorithm: this.algorithm,
+          lawTitles: this.lawTitles,
+          start: (pagination.current - 1) * pagination.pageSize,
+          count: pagination.pageSize
+        },
+        // https://segmentfault.com/q/1010000010323643
+        // 解决GET请求传数组的问题
+        paramsSerializer: function(params) {
+          return qs.stringify(params, {arrayFormat: 'repeat'})
+        }
+      }).then(res => {
+        console.log(res.data)
+        this.$emit('recommendTableChange', res.data.data)
+      })
+    }
+  }
+};
+
+const columns = [
+  {
+    title: '检查内容',
+    dataIndex: 'CHECK_CONTENT',
+    key: 'CHECK_CONTENT',
+    // width: '20%',
+  },
+  {
+    title: '规范用语(违法事实)',
+    dataIndex: 'ILLEGAL_ACTIVITIES',
+    key: 'ILLEGAL_ACTIVITIES',
+    // width: '20%',
+  },
+  {
+    title: '监督意见',
+    dataIndex: 'SUPERVISE_MESSAGE',
+    key: 'SUPERVISE_MESSAGE',
+  },
+  {
+    title: '定性依据',
+    dataIndex: 'ACCORD',
+    key: 'ACCORD',
+  },
+  {
+    title: '处理依据',
+    dataIndex: 'DISPOSAL_ACCORD',
+    key: 'DISPOSAL_ACCORD',
+  },
+  {
+    title: '处理内容',
+    dataIndex: 'DISPOSAL_CONTENT',
+    key: 'DISPOSAL_CONTENT',
+  },
+]
+</script>
