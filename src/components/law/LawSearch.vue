@@ -11,9 +11,18 @@
         </a-breadcrumb>
 
         <a-card title="法规搜索" :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
-          <law-input></law-input>
+          <law-input v-on:load="load" v-on:search="search"></law-input>
           <br>
-          <search-table></search-table>
+          <search-table
+            v-on:searchTableChange="searchTableChange"
+            :laws="laws"
+            :start="start"
+            :count="count"
+            :total="total"
+            :pagination="pagination"
+            :loading="loading"
+            :keyword="keyword"
+          ></search-table>
         </a-card>
         <br>
 
@@ -39,7 +48,45 @@ export default {
         { href: '/law/search', name: '搜索', type: 'laptop' },
         { href: '/law/recommend', name: '推荐', type: 'notification' }
       ],
-      selectedKeys: [1]
+      selectedKeys: [1],
+      laws: [],
+      count: 0,
+      start: 0,
+      total: 0,
+      pagination: {},
+      loading: false,
+      keyword: ''
+    }
+  },
+  methods: {
+    load () {
+      this.loading = true
+    },
+    search (data, keyword) {
+      console.log("search", data, keyword)
+      this.laws = data.lawPOs
+      this.count = data.count
+      this.start = data.start
+      this.total = data.total
+      this.pagination = {
+        current: this.start / this.count + 1,
+        total: this.total,
+        pageSize: this.count
+      }
+      this.loading = false
+      this.keyword = keyword
+    },
+    searchTableChange (data) {
+      this.laws = data.lawPOs
+      this.count = data.count
+      this.start = data.start
+      this.total = data.total
+      this.pagination = {
+        current: this.start / this.count + 1,
+        total: this.total,
+        pageSize: this.count
+      }
+      this.loading = false
     }
   }
 }

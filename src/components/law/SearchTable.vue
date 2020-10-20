@@ -1,86 +1,86 @@
 <template>
-  <a-table :columns="columns" :data-source="data">
-    <a slot="name" slot-scope="text">{{ text }}</a>
-    <span slot="customTitle"><a-icon type="smile-o" /> Name</span>
-    <span slot="tags" slot-scope="tags">
-      <a-tag
-        v-for="tag in tags"
-        :key="tag"
-        :color="tag === 'loser' ? 'volcano' : tag.length > 5 ? 'geekblue' : 'green'"
-      >
-        {{ tag.toUpperCase() }}
-      </a-tag>
-    </span>
-    <span slot="action" slot-scope="text, record">
-      <a>Invite 一 {{ record.name }}</a>
-      <a-divider type="vertical" />
-      <a>Delete</a>
-      <a-divider type="vertical" />
-      <a class="ant-dropdown-link"> More actions <a-icon type="down" /> </a>
-    </span>
+  <a-table
+    :columns="columns"
+    :data-source="data"
+    :pagination="pagination"
+    :loading="loading"
+    @change="handleTableChange"
+  >
   </a-table>
 </template>
+
 <script>
-const columns = [
-  {
-    dataIndex: 'name',
-    key: 'name',
-    slots: { title: 'customTitle' },
-    scopedSlots: { customRender: 'name' },
-  },
-  {
-    title: 'Age',
-    dataIndex: 'age',
-    key: 'age',
-  },
-  {
-    title: 'Address',
-    dataIndex: 'address',
-    key: 'address',
-  },
-  {
-    title: 'Tags',
-    key: 'tags',
-    dataIndex: 'tags',
-    scopedSlots: { customRender: 'tags' },
-  },
-  {
-    title: 'Action',
-    key: 'action',
-    scopedSlots: { customRender: 'action' },
-  },
-];
-
-const data = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-];
-
 export default {
+  props: ["laws", "count", "start", "total", "pagination", "loading", "keyword"],
   data() {
     return {
-      data,
-      columns,
+      columns
     };
   },
+  computed: {
+    data: {
+      get: function () {
+        var laws = []
+        for (let i = 0; i < this.laws.length; i++) {
+          laws.push(this.laws[i])
+          laws[i].key = i.toString()
+        }
+        console.log("getData", laws)
+        return laws
+      },
+      set: function (newValue) {
+      }
+    }
+  },
+  methods: {
+    handleTableChange (pagination, filters, sorter) {
+      console.log(pagination);
+      this.loading = true
+      const qs = require('qs')
+      this.$axios.post('/law/search', qs.stringify({
+        keyword: this.keyword,
+        start: (pagination.current - 1) * pagination.pageSize,
+        count: pagination.pageSize
+      }, { indices: false })).then(res => {
+        console.log(res.data)
+        this.$emit('recommendTableChange', res.data.data)
+      })
+    }
+  }
 };
+
+const columns = [
+  {
+    title: '检查内容',
+    dataIndex: 'checkContent',
+    key: 'checkContent',
+    // width: '20%',
+  },
+  {
+    title: '规范用语(违法事实)',
+    dataIndex: 'illegalActivities',
+    key: 'illegalActivities',
+    // width: '20%',
+  },
+  {
+    title: '监督意见',
+    dataIndex: 'superviseMessage',
+    key: 'superviseMessage',
+  },
+  {
+    title: '定性依据',
+    dataIndex: 'accord',
+    key: 'accord',
+  },
+  {
+    title: '处理依据',
+    dataIndex: 'disposalAccord',
+    key: 'disposalAccord',
+  },
+  {
+    title: '处理内容',
+    dataIndex: 'disposalContent',
+    key: 'disposalContent',
+  },
+]
 </script>
