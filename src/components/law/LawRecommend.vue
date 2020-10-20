@@ -20,6 +20,7 @@
           </a-button>
           <br>
           <recommend-table
+            v-on:recommendTableChange="recommendTableChange"
             :laws="laws"
             :count="count"
             :start="start"
@@ -98,6 +99,19 @@ export default {
     select (algorithm) {
       console.log("select", algorithm)
       this.algorithm = algorithm
+    },
+    recommendTableChange (data) {
+      console.log("recommendTableChange")
+      this.laws = data.lawPOs
+      this.count = data.count
+      this.start = data.start
+      this.total = data.total
+      this.pagination = {
+        current: this.start / this.count + 1,
+        total: this.total,
+        pageSize: this.count
+      }
+      this.loading = false
     }
   }
 }
