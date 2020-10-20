@@ -19,7 +19,15 @@
             确定
           </a-button>
           <br>
-          <recommend-table :laws="laws"></recommend-table>
+          <recommend-table
+            :laws="laws"
+            :count="count"
+            :start="start"
+            :total="total"
+            :pagination="pagination"
+            :algorithm="algorithm"
+            :lawTitles="checkedKeys"
+          ></recommend-table>
         </a-card>
         <br>
 
@@ -51,7 +59,11 @@ export default {
       algorithm: 'Item2Vec',
       checkedKeys: [],
       laws: [],
-      loading: false
+      loading: false,
+      start: 0,
+      total: 0,
+      count: 0,
+      pagination: {}
     }
   },
   methods: {

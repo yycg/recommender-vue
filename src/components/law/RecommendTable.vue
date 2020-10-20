@@ -60,35 +60,35 @@ export default {
 const columns = [
   {
     title: '检查内容',
-    dataIndex: 'CHECK_CONTENT',
-    key: 'CHECK_CONTENT',
+    dataIndex: 'checkContent',
+    key: 'checkContent',
     // width: '20%',
   },
   {
     title: '规范用语(违法事实)',
-    dataIndex: 'ILLEGAL_ACTIVITIES',
-    key: 'ILLEGAL_ACTIVITIES',
+    dataIndex: 'illegalActivities',
+    key: 'illegalActivities',
     // width: '20%',
   },
   {
     title: '监督意见',
-    dataIndex: 'SUPERVISE_MESSAGE',
-    key: 'SUPERVISE_MESSAGE',
+    dataIndex: 'superviseMessage',
+    key: 'superviseMessage',
   },
   {
     title: '定性依据',
-    dataIndex: 'ACCORD',
-    key: 'ACCORD',
+    dataIndex: 'accord',
+    key: 'accord',
   },
   {
     title: '处理依据',
-    dataIndex: 'DISPOSAL_ACCORD',
-    key: 'DISPOSAL_ACCORD',
+    dataIndex: 'disposalAccord',
+    key: 'disposalAccord',
   },
   {
     title: '处理内容',
-    dataIndex: 'DISPOSAL_CONTENT',
-    key: 'DISPOSAL_CONTENT',
+    dataIndex: 'disposalContent',
+    key: 'disposalContent',
   },
 ]
 </script>
