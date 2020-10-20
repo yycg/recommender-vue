@@ -28,6 +28,7 @@
             :pagination="pagination"
             :algorithm="algorithm"
             :lawTitles="checkedKeys"
+            :loading="loading"
           ></recommend-table>
         </a-card>
         <br>
