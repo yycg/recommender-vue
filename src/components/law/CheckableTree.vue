@@ -1,14 +1,17 @@
 <template>
-  <a-tree
-    v-model="checkedKeys"
-    checkable
-    :expanded-keys="expandedKeys"
-    :auto-expand-parent="autoExpandParent"
-    :selected-keys="selectedKeys"
-    :tree-data="treeData"
-    @expand="onExpand"
-    @select="onSelect"
-  />
+  <div>
+    请选择法律条款：
+    <a-tree
+      v-model="checkedKeys"
+      checkable
+      :expanded-keys="expandedKeys"
+      :auto-expand-parent="autoExpandParent"
+      :selected-keys="selectedKeys"
+      :tree-data="treeData"
+      @expand="onExpand"
+      @select="onSelect"
+    />
+  </div>
 </template>
 <script>
 export default {
@@ -24,6 +27,7 @@ export default {
   watch: {
     checkedKeys(val) {
       console.log('onCheck', val);
+      this.$emit('check', val)
     },
   },
   methods: {
