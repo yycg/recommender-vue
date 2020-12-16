@@ -11,14 +11,14 @@
         </a-breadcrumb>
 
         <a-card title="法规推荐" :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
-          <recommend-select v-on:select="select"></recommend-select>
-          <br>
-          <checkable-tree v-on:check="check"></checkable-tree>
-          <br>
-          <a-button type="primary" @click="submit">
-            确定
-          </a-button>
-          <br>
+<!--          <recommend-select v-on:select="select"></recommend-select>-->
+<!--          <br>-->
+<!--          <checkable-tree v-on:check="check"></checkable-tree>-->
+<!--          <br>-->
+<!--          <a-button type="primary" @click="submit">-->
+<!--            确定-->
+<!--          </a-button>-->
+<!--          <br>-->
           <recommend-table
             v-on:recommendTableChange="recommendTableChange"
             :laws="laws"
@@ -68,31 +68,30 @@ export default {
       pagination: {}
     }
   },
+  mounted: function () {
+    console.log("submit", this.algorithm, this.checkedKeys)
+    this.loading = true
+    const qs = require('qs')
+    this.$axios.post('/law/personalRecommend', qs.stringify({
+      userId: '88888',
+      start: 0,
+      count: 10
+    }, { indices: false })).then(res => {
+      console.log(res.data)
+      let data = res.data.data
+      this.laws = data.lawPOs
+      this.count = data.count
+      this.start = data.start
+      this.total = data.total
+      this.pagination = {
+        current: this.start / this.count + 1,
+        total: this.total,
+        pageSize: this.count
+      }
+      this.loading = false
+    })
+  },
   methods: {
-    submit () {
-      console.log("submit", this.algorithm, this.checkedKeys)
-      this.loading = true
-      const qs = require('qs')
-      this.$axios.post('/law/recommend', qs.stringify({
-        algorithm: this.algorithm,
-        lawTitles: this.checkedKeys,
-        start: 0,
-        count: 10
-      }, { indices: false })).then(res => {
-        console.log(res.data)
-        let data = res.data.data
-        this.laws = data.lawPOs
-        this.count = data.count
-        this.start = data.start
-        this.total = data.total
-        this.pagination = {
-          current: this.start / this.count + 1,
-          total: this.total,
-          pageSize: this.count
-        }
-        this.loading = false
-      })
-    },
     check (checkedKeys) {
       console.log("check", checkedKeys)
       this.checkedKeys = checkedKeys
@@ -106,9 +105,8 @@ export default {
       console.log(pagination);
       const qs = require('qs')
       this.loading = true
-      this.$axios.post('/law/recommend', qs.stringify({
-        algorithm: this.algorithm,
-        lawTitles: this.lawTitles,
+      this.$axios.post('/law/personalRecommend', qs.stringify({
+        userId: '88888',
         start: (pagination.current - 1) * pagination.pageSize,
         count: pagination.pageSize
       }, { indices: false })).then(res => {

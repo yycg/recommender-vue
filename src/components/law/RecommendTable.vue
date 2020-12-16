@@ -33,19 +33,8 @@ export default {
     }
   },
   methods: {
-    handleTableChange (pagination, filters, sorter) {
-      console.log(pagination);
-      const qs = require('qs')
-      this.loading = true
-      this.$axios.post('/law/recommend', qs.stringify({
-        algorithm: this.algorithm,
-        lawTitles: this.lawTitles,
-        start: (pagination.current - 1) * pagination.pageSize,
-        count: pagination.pageSize
-      }, { indices: false })).then(res => {
-        console.log(res.data)
-        this.$emit('recommendTableChange', res.data.data)
-      })
+    handleTableChange(pagination, filters, sorter) {
+      this.$emit('recommendTableChange', pagination)
     }
   }
 };
