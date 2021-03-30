@@ -11,8 +11,8 @@
         </a-breadcrumb>
 
         <a-card title="法规推荐" :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
-          <recommend-select v-on:select="select"></recommend-select>
-          <br>
+<!--          <recommend-select v-on:select="select"></recommend-select>-->
+<!--          <br>-->
           <checkable-tree v-on:check="check"></checkable-tree>
           <br>
           <a-button type="primary" @click="submit">

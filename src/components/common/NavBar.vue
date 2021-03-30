@@ -19,25 +19,18 @@
 
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
-          <b-nav-form>
-            <b-form-input
-              size="sm"
-              class="mr-sm-2"
-              placeholder="Search"
-            ></b-form-input>
-            <b-button size="sm" class="my-2 my-sm-0" type="submit">
-              Search
-            </b-button>
-          </b-nav-form>
-
-          <b-nav-item-dropdown right>
-            <!-- Using 'button-content' slot -->
-            <template v-slot:button-content>
-              <em>User</em>
-            </template>
-            <b-dropdown-item href="#">Profile</b-dropdown-item>
-            <b-dropdown-item href="#">Sign Out</b-dropdown-item>
-          </b-nav-item-dropdown>
+            <b-nav-item v-if="loggedIn === false"
+              v-for="(item, i) in rightNavList"
+              :key="i"
+              :href="item.href"
+              :class="{ active: currentPath == item.href }"
+            > {{ item.name }}
+            </b-nav-item>
+            <b-nav-item v-if="loggedIn === true"
+              @click="logout"
+            >
+              退出
+            </b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -65,6 +58,30 @@ export default {
       } else {
         return this.$route.path
       }
+    },
+    loggedIn () {
+      var username = this.$store.state.username
+      console.log('state username:', username)
+      // return username ? true : false
+      return !!username
+    },
+    rightNavList () {
+      return [
+        { href: '/login', name: '登录' },
+        { href: '/register', name: '注册' }
+      ]
+    }
+  },
+  methods: {
+    logout () {
+      console.log("退出")
+      var _this = this
+      this.$axios.get('/logout').then(resp => {
+        if (resp && resp.data.code === 200) {
+          _this.$store.commit('logout')
+          _this.$router.replace('/index')
+        }
+      }).catch(failResponse => {})
     }
   }
 }

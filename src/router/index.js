@@ -26,6 +26,16 @@ export default new Router({
           component: () => import('../components/home/AppIndex')
         },
         {
+          path: '/login',
+          name: 'Login',
+          component: () => import('../components/Login')
+        },
+        {
+          path: '/register',
+          name: 'Register',
+          component: () => import('../components/Register')
+        },
+        {
           path: '/law',
           name: 'LawIndex',
           component: () => import('../components/law/LawIndex')
