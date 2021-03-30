@@ -11,14 +11,28 @@
         </a-breadcrumb>
 
         <a-card title="法规推荐" :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
-<!--          <recommend-select v-on:select="select"></recommend-select>-->
-<!--          <br>-->
-          <checkable-tree v-on:check="check"></checkable-tree>
-          <br>
-          <a-button type="primary" @click="submit">
-            确定
-          </a-button>
-          <br>
+          <div v-if="loggedIn===false">
+  <!--          <recommend-select v-on:select="select"></recommend-select>-->
+  <!--          <br>-->
+            <checkable-tree v-on:check="check"></checkable-tree>
+            <br>
+            <a-button type="primary" @click="submit">
+              确定
+            </a-button>
+            <br>
+          </div>
+
+          <div v-if="loggedIn===true">
+            <!--          <recommend-select v-on:select="select"></recommend-select>-->
+            <!--          <br>-->
+            <!--          <checkable-tree v-on:check="check"></checkable-tree>-->
+            <!--          <br>-->
+            <!--          <a-button type="primary" @click="submit">-->
+            <!--            确定-->
+            <!--          </a-button>-->
+            <!--          <br>-->
+          </div>
+
           <recommend-table
             v-on:recommendTableChange="recommendTableChange"
             :laws="laws"
@@ -68,6 +82,39 @@ export default {
       pagination: {}
     }
   },
+  mounted: function () {
+    if (this.loggedIn) {
+      console.log("submit", this.algorithm, this.checkedKeys)
+      this.loading = true
+      const qs = require('qs')
+      this.$axios.post('/law/personalRecommend', qs.stringify({
+        userId: '88888',
+        start: 0,
+        count: 10
+      }, {indices: false})).then(res => {
+        console.log(res.data)
+        let data = res.data.data
+        this.laws = data.lawPOs
+        this.count = data.count
+        this.start = data.start
+        this.total = data.total
+        this.pagination = {
+          current: this.start / this.count + 1,
+          total: this.total,
+          pageSize: this.count
+        }
+        this.loading = false
+      })
+    }
+  },
+  computed: {
+    loggedIn () {
+      var username = this.$store.state.username
+      console.log('state username:', username)
+      // return username ? true : false
+      return !!username
+    }
+  },
   methods: {
     submit () {
       console.log("submit", this.algorithm, this.checkedKeys)
@@ -106,24 +153,44 @@ export default {
       console.log(pagination);
       const qs = require('qs')
       this.loading = true
-      this.$axios.post('/law/recommend', qs.stringify({
-        algorithm: this.algorithm,
-        lawTitles: this.lawTitles,
-        start: (pagination.current - 1) * pagination.pageSize,
-        count: pagination.pageSize
-      }, { indices: false })).then(res => {
-        console.log(res.data)
-        this.laws = res.data.data.lawPOs
-        this.count = res.data.data.count
-        this.start = res.data.data.start
-        this.total = res.data.data.total
-        this.pagination = {
-          current: this.start / this.count + 1,
-          total: this.total,
-          pageSize: this.count
-        }
-        this.loading = false
-      })
+      if (!this.loggedIn) {
+        this.$axios.post('/law/recommend', qs.stringify({
+          algorithm: this.algorithm,
+          lawTitles: this.lawTitles,
+          start: (pagination.current - 1) * pagination.pageSize,
+          count: pagination.pageSize
+        }, {indices: false})).then(res => {
+          console.log(res.data)
+          this.laws = res.data.data.lawPOs
+          this.count = res.data.data.count
+          this.start = res.data.data.start
+          this.total = res.data.data.total
+          this.pagination = {
+            current: this.start / this.count + 1,
+            total: this.total,
+            pageSize: this.count
+          }
+          this.loading = false
+        })
+      } else {
+        this.$axios.post('/law/personalRecommend', qs.stringify({
+          userId: '88888',
+          start: (pagination.current - 1) * pagination.pageSize,
+          count: pagination.pageSize
+        }, { indices: false })).then(res => {
+          console.log(res.data)
+          this.laws = res.data.data.lawPOs
+          this.count = res.data.data.count
+          this.start = res.data.data.start
+          this.total = res.data.data.total
+          this.pagination = {
+            current: this.start / this.count + 1,
+            total: this.total,
+            pageSize: this.count
+          }
+          this.loading = false
+        })
+      }
     }
   }
 }
