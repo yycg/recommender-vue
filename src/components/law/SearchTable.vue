@@ -2,10 +2,12 @@
   <a-table
     :columns="columns"
     :data-source="data"
+    :scroll="{ x: 1500, y: 400 }"
     :pagination="pagination"
     :loading="loading"
     @change="handleTableChange"
   >
+    <a slot="action" slot-scope="text" :href="text">查看</a>
   </a-table>
 </template>
 
@@ -24,6 +26,7 @@ export default {
         for (let i = 0; i < this.laws.length; i++) {
           laws.push(this.laws[i])
           laws[i].key = i.toString()
+          laws[i].operation = this.getLawUrl(laws[i].id)
         }
         console.log("getData", laws)
         return laws
@@ -45,6 +48,9 @@ export default {
         console.log(res.data)
         this.$emit('searchTableChange', res.data.data)
       })
+    },
+    getLawUrl: function (lawId) {
+      return '/law/detail/' + lawId
     }
   }
 };
@@ -54,33 +60,46 @@ const columns = [
     title: '检查内容',
     dataIndex: 'checkContent',
     key: 'checkContent',
-    // width: '20%',
+    width: 200,
+    fixed: 'left'
   },
   {
     title: '规范用语(违法事实)',
     dataIndex: 'illegalActivities',
     key: 'illegalActivities',
-    // width: '20%',
+    width: 200,
   },
   {
     title: '监督意见',
     dataIndex: 'superviseMessage',
     key: 'superviseMessage',
+    width: 200,
   },
   {
     title: '定性依据',
     dataIndex: 'accord',
     key: 'accord',
+    width: 200,
   },
   {
     title: '处理依据',
     dataIndex: 'disposalAccord',
     key: 'disposalAccord',
+    width: 200,
   },
   {
     title: '处理内容',
     dataIndex: 'disposalContent',
     key: 'disposalContent',
+    width: 200,
+  },
+  {
+    title: '操作',
+    dataIndex: 'operation',
+    key: 'operation',
+    fixed: 'right',
+    width: 100,
+    scopedSlots: { customRender: 'action' },
   },
 ]
 </script>

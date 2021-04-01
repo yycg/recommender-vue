@@ -56,6 +56,11 @@ export default new Router({
           component: () => import('../components/law/LawPersonalRecommend')
         },
         {
+          path: '/law/detail/:id',
+          name: 'LawDetail',
+          component: () => import('../components/law/LawDetail')
+        },
+        {
           path: '/medical',
           name: 'MedicalIndex',
           component: () => import('../components/medical/MedicalIndex')
