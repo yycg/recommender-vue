@@ -16,6 +16,14 @@
         </a-card>
         <br>
 
+        <a-card title="热门法规" :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
+        </a-card>
+        <br>
+
+        <a-card title="分类法规" :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
+        </a-card>
+        <br>
+
       </a-layout>
     </a-layout>
   </a-layout>
