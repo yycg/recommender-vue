@@ -21,6 +21,19 @@
         <br>
 
         <a-card title="分类法规" :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
+          <law-select :options="options" v-on:selectSpecialty="selectSpecialty"></law-select>
+          <div v-if="selected">
+            <CategoryTable
+              v-on:selectTableChange="selectTableChange"
+              :laws="laws"
+              :start="start"
+              :count="count"
+              :total="total"
+              :pagination="pagination"
+              :loading="loading"
+              :specialtyList="specialtyList"
+            ></CategoryTable>
+          </div>
         </a-card>
         <br>
 
@@ -32,10 +45,14 @@
 <script>
 import SideMenu from '@/components/common/SideMenu'
 import Tree from './Tree'
+import LawSelect from './LawSelect'
+import CategoryTable from './CategoryTable'
 export default {
   components: {
     SideMenu,
-    Tree
+    Tree,
+    LawSelect,
+    CategoryTable
   },
   data () {
     return {
@@ -44,7 +61,63 @@ export default {
         { href: '/law/search', name: '搜索', type: 'laptop' },
         { href: '/law/recommend', name: '推荐', type: 'notification' }
       ],
-      selectedKeys: [0]
+      selectedKeys: [0],
+      specialties: [],
+      options: [],
+      selected: false,
+      count: 0,
+      laws: {},
+      start: 0,
+      total: 0,
+      specialtyList: [],
+      loading: false
+    }
+  },
+  mounted: function () {
+    this.getSpecialties()
+  },
+  methods: {
+    getSpecialties () {
+      this.$axios.get('law/specialties').then(res => {
+        console.log(res.data)
+        this.specialties = res.data.data.lawSpecialtyPOs
+        console.log(this.specialties)
+        for (let i = 0; i < this.specialties.length; i++) {
+          this.options.push({value: this.specialties[i].id, label: this.specialties[i].name})
+          console.log(this.options)
+        }
+      })
+    },
+    selectSpecialty: function (data, specialtyList) {
+      console.log('selectSpecialty', data, specialtyList)
+      if (data == null) {
+        this.selected = false
+      } else {
+        this.count = data.count
+        this.laws = data.lawPOs
+        this.start = data.start
+        this.total = data.total
+        this.selected = true
+        this.specialtyList = specialtyList
+        this.pagination = {
+          current: this.start / this.count + 1,
+          total: this.total,
+          pageSize: this.count
+        }
+      }
+    },
+    selectTableChange (data) {
+      console.log('selectTableChange', data)
+      this.laws = data.lawPOs
+      this.count = data.count
+      this.start = data.start
+      this.total = data.total
+      this.pagination = {
+        current: this.start / this.count + 1,
+        total: this.total,
+        pageSize: this.count
+      }
+      this.loading = false
     }
   }
 }
