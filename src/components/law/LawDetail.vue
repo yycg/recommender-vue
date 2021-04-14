@@ -61,17 +61,17 @@
 <!--    <br>-->
 
     <a-card title=相似法规 :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
-<!--      <recommend-table-->
-<!--        v-on:recommendTableChange="recommendTableChange"-->
-<!--        :laws="laws"-->
-<!--        :count="count"-->
-<!--        :start="start"-->
-<!--        :total="total"-->
-<!--        :pagination="pagination"-->
-<!--        :algorithm="algorithm"-->
-<!--        :lawTitles="checkedKeys"-->
-<!--        :loading="loading"-->
-<!--      ></recommend-table>-->
+      <recommend-table
+        v-on:recommendTableChange="recommendTableChange"
+        :laws="laws"
+        :count="count"
+        :start="start"
+        :total="total"
+        :pagination="pagination"
+        :algorithm="algorithm"
+        :lawTitles="checkedKeys"
+        :loading="loading"
+      ></recommend-table>
     </a-card>
     <br>
 
@@ -83,22 +83,33 @@
 
 <script>
 import RecommendExplanationTable from './RecommendExplanationTable'
+import RecommendTable from './RecommendTable'
 export default {
   name: 'LawDetail',
   components: {
-    RecommendExplanationTable
+    RecommendExplanationTable,
+    RecommendTable
   },
   data () {
     return {
       law: {},
       relatedCases: [],
-      lawsOfRelatedCases: []
+      lawsOfRelatedCases: [],
+      laws: [],
+      count: 0,
+      start: 0,
+      total: 0,
+      pagination: {},
+      algorithm: 'Item2Vec',
+      checkedKeys: [this.$route.params.id],
+      loading: false
     }
   },
   mounted: function () {
     this.getdata()
     // this.getRelatedCases()
     this.getLawsOfRelatedCases()
+    this.getSimilarLaws()
   },
   methods: {
     getdata () {
@@ -120,6 +131,54 @@ export default {
       this.$axios.get('law/lawsOfRelatedCases/' + this.$route.params.id).then(res => {
         console.log(res.data)
         this.lawsOfRelatedCases = res.data.data.lawPOs
+      })
+    },
+    getSimilarLaws () {
+      console.log('getSimilarLaws', this.algorithm, this.checkedKeys)
+      this.loading = true
+      const qs = require('qs')
+      this.$axios.post('/law/recommend', qs.stringify({
+        algorithm: this.algorithm,
+        lawTitles: this.checkedKeys,
+        start: 0,
+        count: 10
+      }, { indices: false })).then(res => {
+        console.log(res.data)
+        let data = res.data.data
+        this.laws = data.lawPOs
+        this.count = data.count
+        this.start = data.start
+        this.total = data.total
+        this.pagination = {
+          current: this.start / this.count + 1,
+          total: this.total,
+          pageSize: this.count
+        }
+        this.loading = false
+      })
+    },
+    recommendTableChange (pagination) {
+      console.log('recommendTableChange')
+      console.log(pagination)
+      const qs = require('qs')
+      this.loading = true
+      this.$axios.post('/law/recommend', qs.stringify({
+        algorithm: this.algorithm,
+        lawTitles: this.lawTitles,
+        start: (pagination.current - 1) * pagination.pageSize,
+        count: pagination.pageSize
+      }, {indices: false})).then(res => {
+        console.log(res.data)
+        this.laws = res.data.data.lawPOs
+        this.count = res.data.data.count
+        this.start = res.data.data.start
+        this.total = res.data.data.total
+        this.pagination = {
+          current: this.start / this.count + 1,
+          total: this.total,
+          pageSize: this.count
+        }
+        this.loading = false
       })
     }
   }
