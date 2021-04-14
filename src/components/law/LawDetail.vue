@@ -61,6 +61,17 @@
 <!--    <br>-->
 
     <a-card title=相似法规 :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
+<!--      <recommend-table-->
+<!--        v-on:recommendTableChange="recommendTableChange"-->
+<!--        :laws="laws"-->
+<!--        :count="count"-->
+<!--        :start="start"-->
+<!--        :total="total"-->
+<!--        :pagination="pagination"-->
+<!--        :algorithm="algorithm"-->
+<!--        :lawTitles="checkedKeys"-->
+<!--        :loading="loading"-->
+<!--      ></recommend-table>-->
     </a-card>
     <br>
 
@@ -86,7 +97,7 @@ export default {
   },
   mounted: function () {
     this.getdata()
-    this.getRelatedCases()
+    // this.getRelatedCases()
     this.getLawsOfRelatedCases()
   },
   methods: {
