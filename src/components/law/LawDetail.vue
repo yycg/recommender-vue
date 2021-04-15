@@ -76,7 +76,10 @@
     <br>
 
     <a-card title=推荐解释（同一案例下也出现的法规） :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
-      <recommend-explanation-table :laws="lawsOfRelatedCases"></recommend-explanation-table>
+      <recommend-explanation-table
+        :laws="lawsOfRelatedCases"
+        :loading="explanationLoading"
+      ></recommend-explanation-table>
     </a-card>
   </a-layout>
 </template>
@@ -102,7 +105,8 @@ export default {
       pagination: {},
       algorithm: 'Item2Vec',
       checkedKeys: [this.$route.params.id],
-      loading: false
+      loading: false,
+      explanationLoading: false
     }
   },
   mounted: function () {
@@ -128,9 +132,11 @@ export default {
       return '案例' + i
     },
     getLawsOfRelatedCases () {
+      this.explanationLoading = true
       this.$axios.get('law/lawsOfRelatedCases/' + this.$route.params.id).then(res => {
         console.log(res.data)
         this.lawsOfRelatedCases = res.data.data.lawPOs
+        this.explanationLoading = false
       })
     },
     getSimilarLaws () {

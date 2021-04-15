@@ -47,6 +47,13 @@
         </a-card>
         <br>
 
+        <a-card title=推荐解释（同一案例下也出现的法规） :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
+          <recommend-explanation-table
+            :laws="lawsOfRelatedCases"
+            :loading="explanationLoading"
+          ></recommend-explanation-table>
+        </a-card>
+
       </a-layout>
     </a-layout>
   </a-layout>
@@ -57,12 +64,14 @@ import SideMenu from '@/components/common/SideMenu'
 import RecommendSelect from './RecommendSelect'
 import CheckableTree from './CheckableTree'
 import RecommendTable from './RecommendTable'
+import RecommendExplanationTable from './RecommendExplanationTable'
 export default {
   components: {
     SideMenu,
     RecommendSelect,
     CheckableTree,
-    RecommendTable
+    RecommendTable,
+    RecommendExplanationTable
   },
   data () {
     return {
@@ -79,16 +88,18 @@ export default {
       start: 0,
       total: 0,
       count: 0,
-      pagination: {}
+      pagination: {},
+      lawsOfRelatedCases: [],
+      explanationLoading: false
     }
   },
   mounted: function () {
     if (this.loggedIn) {
-      console.log("submit", this.algorithm, this.checkedKeys)
+      console.log('submit', this.algorithm, this.checkedKeys)
       this.loading = true
       const qs = require('qs')
       this.$axios.post('/law/personalRecommend', qs.stringify({
-        userId: '88888',
+        username: this.$store.state.username,
         start: 0,
         count: 10
       }, {indices: false})).then(res => {
@@ -105,6 +116,8 @@ export default {
         }
         this.loading = false
       })
+
+      this.getPersonalRecommendExplanation(qs)
     }
   },
   computed: {
@@ -117,7 +130,7 @@ export default {
   },
   methods: {
     submit () {
-      console.log("submit", this.algorithm, this.checkedKeys)
+      console.log('submit', this.algorithm, this.checkedKeys)
       this.loading = true
       const qs = require('qs')
       this.$axios.post('/law/recommend', qs.stringify({
@@ -139,18 +152,20 @@ export default {
         }
         this.loading = false
       })
+
+      this.getRecommendExplanation(qs, this.checkedKeys)
     },
     check (checkedKeys) {
-      console.log("check", checkedKeys)
+      console.log('check', checkedKeys)
       this.checkedKeys = checkedKeys
     },
     select (algorithm) {
-      console.log("select", algorithm)
+      console.log('select', algorithm)
       this.algorithm = algorithm
     },
     recommendTableChange (pagination) {
-      console.log("recommendTableChange")
-      console.log(pagination);
+      console.log('recommendTableChange')
+      console.log(pagination)
       const qs = require('qs')
       this.loading = true
       if (!this.loggedIn) {
@@ -174,7 +189,7 @@ export default {
         })
       } else {
         this.$axios.post('/law/personalRecommend', qs.stringify({
-          userId: '88888',
+          username: this.$store.state.username,
           start: (pagination.current - 1) * pagination.pageSize,
           count: pagination.pageSize
         }, { indices: false })).then(res => {
@@ -191,6 +206,29 @@ export default {
           this.loading = false
         })
       }
+    },
+    getPersonalRecommendExplanation (qs) {
+      console.log('personalRecommendExplanation', this.$store.state.username)
+      this.explanationLoading = true
+      this.$axios.get('/law/personalRecommendExplanation', {
+        params: {
+          username: this.$store.state.username
+        }
+      }).then(res => {
+        console.log(res.data)
+        this.lawsOfRelatedCases = res.data.data.lawPOs
+        this.explanationLoading = false
+      })
+    },
+    getRecommendExplanation (qs, checkedKeys) {
+      this.explanationLoading = true
+      this.$axios.post('law/recommendExplanation', qs.stringify({
+        lawTitles: checkedKeys
+      }, {indices: false})).then(res => {
+        console.log(res.data)
+        this.lawsOfRelatedCases = res.data.data.lawPOs
+        this.explanationLoading = false
+      })
     }
   }
 }

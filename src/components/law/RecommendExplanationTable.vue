@@ -3,6 +3,7 @@
     :columns="columns"
     :data-source="data"
     :scroll="{ x: 1500, y: 400 }"
+    :loading="loading"
   >
     <a slot="action" slot-scope="text" :href="text">查看</a>
   </a-table>
@@ -10,7 +11,7 @@
 
 <script>
 export default {
-  props: ["laws"],
+  props: ['laws', 'loading'],
   data() {
     return {
       columns
